@@ -1,0 +1,13 @@
+decimal precision conformance patch + compile fixes + updated ChangeLog
+***END OF DESCRIPTION***
+
+Place the long patch description above the ***END OF DESCRIPTION*** marker.
+The first line of this file will be the patch name.
+
+
+This patch contains the following changes:
+
+M ./BRMH-2.5-CHANGELOG +12
+M ./Netrek.tmpl -1 +1
+M ./feature.c -1 +1
+M ./inform.c -4 +13

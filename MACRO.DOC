@@ -1,0 +1,183 @@
+
+NEWMACRO and SMARTMACRO documentation - Jeff Nelson 6/4/1993 
+
+Here is the idea:
+A player should be able to include in his/her macros whatever
+reasonable information is available.  And configuring its display
+in whatever way is desired.  In order to do this, the following
+syntax is used (while remaining completely compatible with old NBT
+macros).
+
+A key is assigned in the defaults file (ie .xtrekrc, etc)
+by a line like:
+
+mac.F.T		Help!  Carrying %a!!
+
+This defines a macro which will send a distress containing
+the number of armies a player is carrying to his team.
+
+Note, this is NOT printf syntax!  Any attempt to use formatting will
+fail miserably.  Maybe in the future someone will want to develop
+a means of formatting the variables used in macros, but the only
+means I can think of are both bulky and ugly.
+
+Here is another example:
+
+mac.f		Help!  Carrying %a!!
+
+Unlike the first, this macro will not send directly to the team,
+instead it requires that you give a third keystroke specifying the
+recipient.  For example, it could be invoked by:
+
+XfT		<- to your team
+Xf1		<- to player 1
+XfG		<- if you are desperate, send to God
+XfA		<- if you are stupid, send to ALL
+
+Old macros will still work in addition to these, thus be sure there are
+no conflicts.  These generally cause suprising results.  For example,
+if this is in your macro file:
+
+mac.E.T		Help!  I'm carrying!!
+macro.E.A	You all suck!
+mac.E		Help!  I'm a twink!!
+mac.E.T		Help!  I'm carrying again!!
+macro.E.A	You all suck even worse NOW!
+
+The suprising results would be that pressing XE would broadcast the
+first two messages, and then wait for the destination of the third.
+It would be impossible to ever use the last two.  Unfortunately, multiline
+macros also do not work if they require a destination.  There is no
+good reason for this, but since multiline macros annoy the hell out
+of me, I ain't fixing it.  You can still do something like:
+
+mac.D.A:	D
+mac.D.A:	O
+mac.D.A:	O
+mac.D.A:	S
+mac.D.A:	H
+
+This would properly broadcase 5 messages containing 1 character to all.
+If you tried to specify the destination for these by using "mac.D:",
+only 'D' would be sent.
+
+Also '?' can still not be used as a macro key.
+The following definitions will work in a macro:
+
+%a      armies I am carrying
+%d      my damage percentage
+%s      my shield percentage
+%f      my fuel percentage
+%w      my wtemp percentage
+%e      my etemp percentage
+%p      id character of player nearest mouse
+%t      team id character of planet/player nearest mouse
+%T      team id character of my team
+%c      my id character
+%n      armies on planet nearest mouse
+%E      1 if etemped, 0 if not
+%W      1 if wtemped, 0 if not
+%S      my two character ship type
+%g      id char of nearest friendly player to my ship
+%h      id char of nearest enemy player to my ship
+%l      three character name of planet nearest mouse
+%m      the last message you sent
+%i	my full player name (16 character max)
+%u	full name of player nearest mouse (16 character max)
+%z	3 letter team id of player/planet nearest mouse
+%b      my nearest planet
+
+Ping stats: (may differ slightly from server '!' ping stats)
+%v    average ping stat round trip time 
+%V    ping stat round trip standard deviation
+%y    percent total packet loss as calculated by server formula
+
+FULLY CAPITALIZED:
+%L	three character name of planet nearest mouse
+%M	the last message you sent
+%I	my full player name (16 character max)
+%U	full name of player nearest mouse (16 character max)
+%Z	3 letter team id of player/planet nearest mouse
+%B      my nearest planet
+
+As a further extension to NEWMACRO, a macro may now be sent
+to any of the following destinations:
+
+%i %I %c      send message to self
+%u %U %p      send message to player nearest mouse
+%t %z %Z      send message to team of player nearest mouse
+%g            send message to nearest friendly player to my ship
+%h            send message to nearest enemy player to my ship
+
+with a syntax like
+
+#useful for INL...
+mac.C.%i:	CAPTAIN
+mac.N.%i:	NEWGALAXY
+mac.S.%i:	START
+mac.T.%i:	%Z
+
+mac.W.%t:	SHUT UP, TWINKS!!
+mac.I.%u:	%u: det when you escort!
+mac.O.%u:	(%i) ogging
+
+What this does is allows you to send a macro to a player or
+team specified by your mouse location instead of requiring
+a 3rd character to be input.  Also, it allows you to send
+message to yourself without having to actual sit there and
+figure out who you are (they tried and failed back in the '60s).
+
+
+>>>>The above is available when NEWMACRO is defined;  from here on,
+>>>>SMARTMACRO must be defined *in addition*.
+
+Further, tests may be done within the macro system, the syntax
+for these test is as follows.
+%?	introduces a test
+=	equivalence
+>	greater
+<	less
+
+Expressions are evaluated on a character by character basis until the
+test is resolved.  The text of the test is then replaced in the macro
+by 1 or 0.
+
+Test are then fed to a syntax I call conditional text.  The best way
+to demonstrate how this works is example.
+
+1%{included if true%!included if false%}
+
+This would print:
+included if true
+
+0%{included if true%!included if false%}
+included if false
+
+Combining the whole package, a very robust macroing system is
+quickly generated.  One can easily design or mimic Distress calls,
+including the variable NBT distress of the BRM client and all the
+hardcoded message macroing built into my own client but never released.
+
+Here are a few more samples to work from:
+
+mac.F.T:	Help!  Carrying %a!!
+mac.f:		Help!  Carrying %a!!
+mac.c.T:	%p++ near %l
+mac.b.T:	%?%n>4%{bomb %l at %n%!bomb%}
+mac.d.T:	%E%{%!%W%{%!I'm fine.  How are you?  %}%}%E%{ETEMPED!!!  %}%W%{WTEMPED!!!  %}Carrying %?%a>0%{%a armies!%!NO armies.%}
+mac.a.T:        %E%{ETEMPED!!!  %}%W%{WTEMPED!!!  %}Carrying %?%a>0%{%a armies!%!NO armies.%}
+mac.R.A:	I'm a %?%S=SB%{star base!%!twink!%}
+mac.K.A:	KissMy%S
+mac.t:		thanks
+mac.y:		yes
+mac.n:		no
+mac.B:		bye, getting hungry/sleep/horny
+mac.e.T:	need escort going to %l%?%a>0%{, carrying %a armies!%}
+mac.v.%t:       %T%c PING stats: Average: %v ms, Stdv: %V ms, Loss: %y%%
+
+#My Favorite:
+mac.m:		%m
+
+
+Also check out the file MACROS.example on ftp.cd.chalmers.se:pub/netrek
+

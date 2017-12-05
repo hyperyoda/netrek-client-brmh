@@ -1,0 +1,36 @@
+BRMH 2.5 Changelog
+Zachary Uram <netrek@gmail.com>
+Sept. 3, 2009
+
+General changes:
+- Fixed some config issues
+- Fixed some compiler warnings
+
+Code changes:
+- Added decimal precision conformance for displayed stats for improved accuracy.
+
+
+BRMH 2.5 Changelog
+Karthik Arumugham <karthik@karthik.com>
+Oct 22, 2007
+
+General changes:
+- Updated maintainer address
+- Display ship speed next to own ship on tactical instead of player number
+- New sorted player list, displays enemy team(s) first, then own team, then observers
+  (enable "sortPlayers: on" and "sortPlayersObs: on" in your rc)
+- Show 0.00 kills as blanked out in the playerlist instead of showing "0.00" or "-.--"
+- Updated default metaserver to metaserver.netrek.org
+- Keyboard torpedoes now autorepeat with the minimum server torp delay regardless of keyrepeat delay
+- Clock can be reset to zero (default 'K')
+- Support metaserver strings for INL, Sturgeon, and Other
+- Cloaking graphics last correct duration (was broken since change from 5ups to 10ups)
+- Support for "username:" line in rc file to set username
+
+Code changes:
+- Compiles on MacOS X
+- Removed dependency on user-installed libgmp on MacOS X
+- Made PI longer for no specific reason
+- Fixed multiply-defined and used qwin variable that caused crashes (one qwin is now quitwin)
+- Removed strdup() code
+- Support FPS and UPS feature packets

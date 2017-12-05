@@ -1,0 +1,294 @@
+#include "Netrek.rules"
+
+
+               
+/* if you use gcc, you may need to uncomment the following line
+	    so system-default C flags don't get passed to gcc */
+               CCOPTIONS = 
+
+                    CC = gcc
+           CDEBUGFLAGS = -O -g
+
+
+#define RSA_            YES             /* RSA */
+
+#if RSA_
+/* RSA paths */
+            MP_LIB = -lgmp -lmp
+            MP_INCLUDE = -Igmp
+
+/* RSA boxes -- put here because the default # of boxes might change */
+
+        RSA_BOX_SRCS =  rsa_box_0.c rsa_box_1.c rsa_box_2.c \
+			rsa_box_3.c rsa_box_4.c
+        RSA_BOX_OBJS =  rsa_box_0.o rsa_box_1.o rsa_box_2.o \
+			rsa_box_3.o rsa_box_4.o
+#endif /* _RSA_ */
+	   
+/* BIN for binary installation if desired */
+NETREK_BIN =
+
+              /* OPTIONS/FEATURES */
+
+#define TcpNodelay	YES		/* normally the X socket TCP_NODELAY
+					   option is set by default.  Some
+					   servers don't do it (hp), making
+					   the display far more jumpy then it
+					   needs to be */
+#define _UCI		NO		/* if using UCI's warped gcc setup */
+
+#define NetStat		YES		/* Lag meter */
+#define RotateRace	YES		/* galactic rotation */
+#define MooTCursors	YES		/* cursors in team windows */
+#define MooBitmaps	YES		/* moo planet bitmaps */
+#define PacketLog	NO		/* allow ability to log packets */
+#define LogMesg		YES		/* log message option */
+#define DynamicBitmaps	NO		/* dynamic bitmaps (EM) */
+#define TTS_		YES		/* tactical tunnel syndrome fix */
+#define Autologin	YES		/* defaults version of COW-lite a-l */
+#define Hockey		YES		/* cosmetic changes for netrek hockey */
+#define PhaserShrink	YES		/* phaser shrink option (hde - 
+					   Red Shirt's suggestion that phasers
+					   shrink during hit to reduce
+					   tactical clutter */
+#define Metaserver	YES		/* -m option */
+#define ForkNetrek	YES		/* keep metawindow up, fork netrek */
+#define Gateway		NO		/* enable use of gateway/trekhopd */
+
+#if Gateway
+#define Trekhopd	YES		/* enable use of trekhopd */
+
+/*
+ * IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+ *
+ * Set MyNet and MyNetMask to however much of the address is significant.
+ * For example, I want to restrict the use of my clients to the 129.212
+ * subnet (all machines within Amdahl), so I set MyNet=129.212.0.0
+ * MyNetMask to be 255.255.0.0.  The host's address will be ANDed with the
+ * mask and then compared to MyNet.
+ *
+ * If you only want your client to be run on your host, then you'd use all
+ * eight bytes.
+ */
+
+#define MyNet		128.195.0.0
+#define MyNetMask	255.255.0.0
+#endif	/* Gateway */
+
+#define Feature		YES		/* various macros features by NBT,
+					   JN */
+#define ControlKey      YES		/* some things from cowlite */
+
+#define MultiLineMacros	YES		/* multi-line macros (not implmnted) */
+
+#define FontBitmaps	NO		/* Requires special fonts to run.
+					   Available seperately as
+					   BRMH-FONTBASED-fonts.tar.gz.
+					   Not compatible with DynamicBitmaps */
+#define XRCHelp		NO		/* xtrekrc defaults help window */
+#define UdpDropFix	YES		/* heuristics to minimize affects of
+					   dropped packets */
+
+#if SystemV || SystemV4
+#define HaveRandom	NO		/* if OS has srandom()/random() */
+#define HaveRInt	NO		/* if OS has rint() */
+#else
+#define HaveRandom	YES		/* if OS has srandom()/random() */
+#define HaveRInt	YES		/* if OS has rint() */
+#endif
+
+         /* Change these at your own risk */
+
+#define NBT_		YES		/* changes by Nick Trown */
+#define NBTDistress	NO		/* NBT distress (obsoleted by RCD) */
+#define Galaxy		YES		/* changes from KSU */
+#define TCursors	YES		/* special cursors for windows */
+#define GodMessage	YES		/* message to god */
+#define EM_		YES		/* changes by Eric Mehlhaff */
+#define NoTrap		YES		/* don't trap signals */
+#define ShortPackets	YES		/* Heiko Wengler's short-packets */
+#define Ping		YES		/* ping packets */
+#define ForMorons	NO		/* netrek for Morons info borg */
+/* CorrPackets -- some udp implementations don't do checksuming since udp
+   is used for NFS and as such requires the fastest possible performance,
+   but this means that garbage packets could be sent which could crash
+   the client if the proper checks aren't performed */
+#define CorrPackets	YES		/* check for bad packets */
+#define NoSprintf	YES		/* avoid using sprintf in a few places
+					   (it's notoriously slow) */
+#define Debug		NO		/* variables debugging */
+#define UsePortSwap	YES		/* sometimes needed */
+	 /* misc */
+#define Record		YES		/* game record option (but no f
+					   playback) */
+#define RecordDebug	NO		/* Debug Recording */
+
+#define BD_		NO		/* minor borg detection (not release) */
+#define SPTest		NO		/* client-to-client comparisons (-pg)*/
+#define Xtra		NO		/* extra chance for x input (broke) */
+#define Xsig		NO		/* SIGIO on X socket (test that hasn't
+					   really panned out) */
+
+	 /* non-release */
+#define ShowDefaults	NO
+
+       /* end of CONFIGURATION.  No need to edit further */
+
+/* kludges for older version of imake */
+        ALLDEFINES = $(ALLINCLUDES) $(STD_DEFINES) $(EXTRA_DEFINES) $(PROTO_DEFINES) $(DEFINES) $(SPECIAL_DEFINES)
+       ALLINCLUDES = $(INCLUDES) $(EXTRA_INCLUDES) $(TOP_INCLUDES) $(STD_INCLUDES)
+         MKDIRHIER = $(BINDIR)/mkdirhier
+
+/* tedium */
+#if !HaveRandom
+NEEDRANDOM=-DNEED_RANDOM
+#endif
+#if ShowDefaults
+SHOWDEFAULTS=-DSHOW_DEFAULTS
+#endif
+#if RSA_
+RSA=-DRSA
+#endif
+#if NetStat
+NETSTAT=-DNETSTAT
+#endif
+#if RotateRace
+ROTATERACE=-DROTATERACE
+#endif
+#if Debug
+DEBUG=-DDEBUG
+#endif
+#if ForMorons
+FOR_MORONS=-DFOR_MORONS
+#endif
+#if MooBitmaps
+MOOBITMAPS=-DMOOBITMAPS
+#endif
+#if MooTCursors
+MOOTCURSORS=-DMOOTCURSORS
+#endif
+#if DynamicBitmaps
+DYNAMIC_BITMAPS=-DDYNAMIC_BITMAPS -DNO_READ_BITMAPFILE -DNETREK
+#endif
+#if TTS_
+TTS=-DTTS
+#endif
+#if Autologin
+AUTOLOGIN=-DAUTOLOGIN
+#endif
+#if Hockey
+HOCKEY=-DHOCKEY
+#endif
+#if PhaserShrink
+PHASER_SHRINK=-DPHASER_SHRINK
+#endif
+#if Metaserver
+META = -DMETA
+#endif
+#if ForkNetrek
+FORKNETREK = -DFORKNETREK
+#endif
+#if Gateway
+GATEWAY=-DGATEWAY
+#if Trekhopd
+TREKHOPD=-DTREKHOPD
+#endif
+MYADDR=-DMYADDR=\"MyNet\"
+MYADDRMASK=-DMYADDR_MASK=\"MyNetMask\"
+#endif
+#if Feature
+FEATURE=-DFEATURE -DDIST_KEY_NAME
+#endif
+#if ControlKey
+CONTROL_KEY=-DCONTROL_KEY
+#endif
+#if MultiLineMacros
+MULTILINE_MACROS=-DMULTILINE_MACROS
+#endif
+#if FontBitmaps
+FONTBITMAPS=-DFONT_BITMAPS
+#endif
+#if TcpNodelay
+SETTCPNODELAY=-DSETTCPNODELAY
+#endif
+#if Xtra
+XTRA=-DXTRA
+#endif
+#if Xsig
+XSIG=-DXSIG
+#endif
+#if _UCI
+UCI=-DUCI
+#endif
+#if PacketLog
+PACKET_LOG=-DPACKET_LOG
+#endif
+#if XRCHelp
+XTREKRC_HELP=-DXTREKRC_HELP
+#endif
+#if LogMesg
+LOGMESG=-DLOGMESG
+#endif
+#if Record
+RECORD=-DRECORD
+#endif
+#if RecordDebug
+RECORD=-DRECORD
+RECORD_DEBUG=-DRECORD_DEBUG
+#endif
+
+#if NBT_
+NBT=-DNBT
+#endif
+#if NBTDistress
+NBTDIST=-DNBTDIST
+#endif
+#if Galaxy
+GALAXY=-DGALAXY
+#endif
+#if TCursors
+TCURSORS=-DTCURSORS
+#endif
+#if GodMessage
+GODMESSAGE=-DGODMESSAGE
+#endif
+#if EM_
+EM=-DEM
+#endif
+#if NoTrap
+NO_TRAP=-DNO_TRAP
+#endif
+#if ShortPackets
+SHORT_PACKETS=-DSHORT_PACKETS
+#endif
+#if Ping
+PING=-DPING
+#endif
+#if CorrPackets
+CORRUPTED_PACKETS=-DCORRUPTED_PACKETS
+#endif
+#if NoSprintf
+NO_SPRINTF=-DNO_SPRINTF
+#endif
+#if UsePortSwap
+USE_PORTSWAP=-DUSE_PORTSWAP
+#endif
+#if UdpDropFix
+DROPFIX=-DDROP_FIX
+#endif
+#if BD_
+BD=-DBD
+#endif
+#if SPTest
+SPTEST=-DSPTEST
+#endif
+
+EXTRA_DEFINES = $(RSA) $(NETSTAT) $(ROTATERACE) $(DEBUG) $(FOR_MORONS) \
+ $(MOOBITMAPS) $(MOOTCURSORS) $(AUTOLOGIN) $(DYNAMIC_BITMAPS) \
+ $(TTS) $(GATEWAY) $(TREKHOPD) $(FEATURE) $(CONTROL_KEY) \
+ $(MULTILINE_MACROS) $(NEEDRANDOM) $(HOCKEY) $(PHASER_SHRINK) $(META)\
+ $(FORKNETREK) $(SETTCPNODELAY) $(XTRA) $(XSIG) $(UCI) $(PACKET_LOG) \
+ $(XTREKRC_HELP) $(LOGMESG) $(RECORD) $(NBT) $(NBTDIST) $(GALAXY) $(TCURSORS) \
+ $(GODMESSAGE) $(EM) $(NO_TRAP) $(SHORT_PACKETS) $(PING) $(CORRUPTED_PACKETS) \
+ $(NO_SPRINTF) $(USE_PORTSWAP) $(BD) $(SPTEST) $(SHOWDEFAULTS) $(FONTBITMAPS) \
+ $(DROPFIX) $(MYADDR) $(MYADDRMASK)

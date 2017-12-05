@@ -1,0 +1,27 @@
+(windows-FED-a) # Fed choose team window
+(windows-KLI-a) # Kli choose team window
+(windows-ORI-a) # Ori choose team window
+(windows-ROM-a) # Rom choose team window
+(windows-UDP-a) # UDP window [+]
+(windows-help-a) # help window [h]
+(windows-lagMeter-a) # lag meter [/]
+(windows-local-a) # Tactical window
+(windows-map-a) # Galactic window
+(windows-message-a) # Send-message window
+(windows-netrek-a) # Top window
+(windows-netrek_icon-a) # Icon window
+(windows-pingStats-a) # Ping stats window [,]
+(windows-planet-a) # Planet list [P]
+(windows-player-a) # Player list [L]
+(windows-quit-a) # QUIT button (choose team window)
+(windows-rank-a) # Rank window [U]
+(windows-review-a) # ->ALL/team/individual messages window
+(windows-review_all-a) # ->ALL messages window
+(windows-review_kill-a) # Kills window
+(windows-review_phaser-a) # Phaser points window
+(windows-review_team-a) # Team messages window
+(windows-review_your-a) # Individual messages window
+(windows-stats-a) # Shield/Dam/Fuel/Wtemp/Etemp stat bars
+(windows-tstat-a) # Tactical stat bar [or dashboard]
+(windows-war-a) # War window [W]
+(windows-warn-a) # Warning window

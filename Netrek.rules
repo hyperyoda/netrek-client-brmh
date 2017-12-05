@@ -1,0 +1,19 @@
+/*
+ * NormalProgramTargetRandomize
+ */
+#ifndef NormalProgramTargetRandomize
+#define NormalProgramTargetRandomize(program,objects,deplibs,locallibs,syslibs,rnd)  @@\
+program:$(P) objects deplibs rnd                                        @@\
+	RemoveTargetProgram($@)                                         @@\
+	$(CC) -o $@ `rnd objects` $(LDOPTIONS) locallibs $(LDLIBS) syslibs $(EXTRA_LOA D_FLAGS) @@\
+                                                                        @@\
+clean::                                                                 @@\
+	$(RM) program
+#endif /* NormalProgramTargetRandomize */
+
+#ifndef Protos
+#define Protos(proto, src)                                              @@\
+protos::                                                                @@\
+	$(RM) proto                                                     @@\
+	cproto -e -f3 -m -D__STDC__ -D_NO_DEPEND -DCPROTO $(EXTRA_DEFINES) $(ALLINCLUDES) src > proto
+#endif /* Protos */

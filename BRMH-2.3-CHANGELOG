@@ -1,0 +1,233 @@
+Version 2.3 by Dave Pinkney, all others by Ted Hadley.
+
+2.3:	
+	* Fixed the observed-cloaker problem (they were invisible to
+	  a locked on observer).
+        * Added a new xtrekrc resource for the sorted player list:
+	  teamOrder (you can list your team first or last).
+        * Added full packet recording (except MOTD, MOTD_PIC, and
+	  RSA_KEY), with a paradise compatibility option.  Record
+          resources: recordGame, recordFile, maxRecord, recordIndiv,
+	  confirmOverwrite
+        * Added playback abilities for recorded games
+
+# Order your team in the sorted player list (requires sortPlayers: on)
+# Mostly useful for people with 1024x768 resolution
+# 0 -- disabled, 1 -- list your team first, 2 -- list your team last
+teamOrder:			0
+
+# Record game by default?  (Can also use command line option)
+recordGame:			off
+
+# File to record to
+recordFile:			noFileName.trk
+
+# How many bytes to record?  0 for unlimited size
+maxRecord:			0
+
+# Record individual (personal) message?
+recordIndiv:			off
+
+# Require confirmation before recording over existing file?
+confirmOverwrite:		on
+
+
+2.2p3:
+	* decreased weapon temp and engine temp bars to max out at
+	  100%.  (suggested by John Salomon <john@csua.berkeley.edu>)
+
+2.2p2:
+	* buttonmap array extented (wbradley@sedona.intel.com)
+	* self-selectable %p
+	* window title (server name) got lost
+	* metaserver - middle mouse button == observer
+	* 500 macros allowed
+	* fixed 24bit display problem
+	* flag for using metacache as 
+2.2p1:
+	* metaserver "Chaos" for 'C'
+	* Fixed galaxy ship problem (some client out there as incredibly
+	  weird getship.c values for galaxy ship)
+
+2.2:
+	* limited .netrekrc created if no config file exists
+	  (with reasonable geometry, new users only)
+	* SHIP_CAP feature
+	* obscure waitq feature
+	* scrolled-text window scrollbars and scrolling functionality
+	* compliance with ICCCM delete window 
+	* observer support for INL (COW implementation)
+	* udpClientReceive misspelled in .xtrekrc doc
+	* MOO-bitmap fix for fontbased clients
+	* fixed ICCM input focus problem (openlook)
+	  (W_SetIconWindow was obliterating the input hint)
+	* fork/exec now in place.
+
+# Blink wait queue window instead of opening netrek window when in game.
+noObscureEntry:                  off
+
+# Scrollbars displayed on scrollable text windows.
+scrollbar:                       on
+
+# Maximum lines saved in each text window.
+scrollSaveLines:                 100
+
+# Scrollbars width. (Note that scroll control is allowed anywhere in a text
+# window.)
+scrollbarWidth:                  5
+
+2.1:
+	* metaserver output changed somewhat, added player list option
+	* metaserver cache. Store results in ~/.metacache and use for 
+	  the next 5 minutes ('metaCacheDisable: on' to defeat)
+	  (also fallback in case metaserver down)
+	* added 'mesgfont' option for message-window font 
+	* configurable playerlist borrowed from COW-lite
+	* re-fixed invisible plasma problem, was popping exploded
+	  plasmas back into being.
+	* no command-line arguments now asks player to use metaserver
+	* added 'reportPhaserInReview'
+	* 'shiftedMouse' on automatically if shift/ctrl/meta buttons
+	  used in buttonmap
+	* (metaserver window vfork/exec 'netrek' so window stays up
+	   coded but not released)
+------------------
+2.0p17:
+	* fixed old invisible plasma problem
+        * SPII (Heiko Wengler)
+	* fixed refresh problem after de-iconify
+   [James Soutter:]
+	* ship-specific keymaps (keymap-sc, ckeymap-ca, ..) are now an
+	  extension of the default keymap (keymap and ckeymap).
+	* keymap is now recreated when the defaults file is reloaded
+	  so that removed key definitions will take effect.
+	* The keymaps are now parsed more carefully.  Previously, the parser
+	  would work passed the end of the definition string if the string
+	  ended in the middle of a definition.  Also the parser
+	  would not nasty things with definitions of the form `^<ctrl-a>a'.
+	* Fixed the parsing of ctrl-shift buttonmaps.
+	
+
+2.0p16:
+	* ship-specific keymaps [keymap-sc, keymap-sb, ...]
+        * shrink phaser precision improvement
+        * PHASER_FUSE_SEND feature (supported by calvin, server always send 
+          phaser instead of skipping during rapid phasering), makes cleaning
+          up dropped phaser packets trivial
+   [remainder from James Soutter:]
+	* Added stippleBorder (textured alert border) as an option for
+	  color and greyscale clients.
+	* Messages can now be entered from the warn window as well as
+	  from the message window.
+	* Added the code for COW's newdashboard and newdashboard2.
+	* Added dashboardStyle to select between the available dashboards.
+	  The option dashboard now implies dashboardStyle=1.
+	* Redraw the galactic when the the galactic's bitmaps are changed
+	  through the options menu.
+	* Fixed main.c so that it will compile when RSA_ == NO.
+	* Make rabbit-ear bitmaps a fourth bitmap style for the local map
+	  The option newPlanetBitmaps now only effects the galactic map.
+	  Previously I had been avoiding the rabbit-ear bitmaps because
+	  it is difficult to tell the color (and hence the race) of a
+	  stippled planet on a greyscale galactic.
+	* Made a new function DrawLocalPlanets().  The new function
+          replaces code from local() as well as the bitmap selection
+	  functions like planetBitmap().  By moving code from local()
+	  we hope to get better register allocation.  By including code
+	  from planetBitmap() etc. we hope to speed the program up and
+	  to improve clarity.
+	* Previously, each local planets was printed twice if newPlanetBitmaps
+	  was set.  The code has now been rewritten to prevent this.
+	  As a result, race bitmaps can not longer be given rabbit-ears.
+	  However, if rabbit-ears on race bitmaps was previously seen to
+	  be important then race bitmaps would properly support stippling,
+	  which they don't.
+
+2.0p15:
+	* puck direction indicator
+	* tractor/pressor erase problem on b&w fixed
+	
+2.0p14:
+	* metaserver update for new metaserver output
+	* got rid of telnet, use read_port directly in who's playing -c
+	  check
+	* fixed restart defaults bitmap problem on black & white displays.
+	* added extended-mouse features (shift, ctrl, shift+ctrl mouse)
+	* extended usage message, WWW info
+
+2.0p13:
+	* exorcized two evil spirits possessing socket.c, fear they've
+	  immediately take up residence in the RCD code
+	* midnight seance conjured up spirit alleging to be Kevin P. Smith,  
+	  I remain dubious because said person is presently alive and also
+	  because spirit asserts that paradise is the only game in the
+	  afterlife
+
+2.0p12:
+	* dec-alpha OSF1 changes
+	* tstat window height now defined by font height
+2.0p11:
+	* logFile problem fixed
+	* fastClear default
+	* macrowin display for control characters
+	* singleMacro fixed
+2.0p10:
+	* extended RCD window string buffer to BUFSIZ (160 too short).
+	* rcd syntax error fixes
+
+2.0p9:
+        * middle mouse button no longer pastes if in remote message
+          mode (i.e.cursor in tactical window).  Too easy to accidently
+          paste.
+        * paste semantics changed: first character/start-address now used 
+          as destination for all lines of message.
+        * limit 5 lines pasted.
+        * waitq string problem when 600 -> 0 fixed
+        * waitq windows not unmapped, fixed.
+2.0p8:
+	* maxwarpi removed -- concept flawed, most people miss maxwarp
+	  because the packet was dropped, not because they didn't
+	  hit the maxwarp key 
+	* default tactical planet name mode back to original
+	* message time-stamping
+	* -c -- who's playing flag
+	* -m -- metaserver window (Nick Trown's code from COW)
+
+2.0p7:
+	* det/torp timechecks to prevent dets/torps from being sent < 100ms
+	  interval (limiting dets makes a big difference in fuel and
+	  wtemp during autorepeat).
+
+2.0p6:	* fixed send-message redraw on expose
+	* added paste with middle mouse button to message window
+	  if message pending
+
+2.0p5:
+	* added reportAllInReview, reportTeamInReview, reportIndInReview 
+	  to selectively send resp. messages to the all-messages window.
+	* added shrinkPhasers, shrinkPhasersAmount on suggestion from
+	  Herbert Enderton:
+			(tick 0)   ME----------HIM
+			(tick 2)   ME  --------HIM
+			(tick 4)   ME    ------HIM
+			(tick 6)   ME      ----HIM
+			(tick 8)   ME        --HIM
+	* fixed crash in save-motd
+
+2.0p4:
+	* feature: hockey cosmetic stuff - puck bitmap, no letter on 
+	  tactical, 'P' on galactic, better redraw of puck on galactic.
+
+2.0p3:
+	* fixed: ignore-multi-line removed.  It doesn't work.
+	* fixed: %u now tclose_j (any player) instead of just enemy
+	* added reportKillsInReview variable to selectively send
+	  kill messages to the all-messages window
+
+2.0p2:
+	* fixed: TTS fix for non-new-message servers
+	* fixed: keeppeace true by default (not taken from server)
+
+2.0p1:
+	* fixed: waitq window doesn't update, ghostbusts
+	* fixed: etemp not displayed correctly

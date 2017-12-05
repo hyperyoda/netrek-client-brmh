@@ -1,0 +1,21 @@
+#!/bin/sh
+VERSION=`grep VERSION version.h | awk -F\" '{print $2}'`
+PATCH=`grep PATCHLEVEL version.h | awk '{print $3 }'`
+ARCH=`arch`
+if [ $PATCH -eq 0 ] ; then
+	NAME=BRMH-${VERSION}.${ARCH}
+	NAME_STATIC=BRMH-${VERSION}.${ARCH}_static
+else
+	NAME=BRMH-${VERSION}p${PATCH}.${ARCH}
+	NAME_STATIC=BRMH-${VERSION}p${PATCH}.${ARCH}_static
+fi
+make clean ; xmkmf ; make World
+strip netrek
+mv netrek $NAME
+gzip -9 $NAME
+echo ${NAME}.gz done
+make LOCAL_LDFLAGS=-static
+strip netrek
+mv netrek $NAME_STATIC
+gzip -9 $NAME_STATIC
+echo ${NAME_STATIC}.gz done

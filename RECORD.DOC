@@ -1,0 +1,114 @@
+				Recording Info
+
+			Recording xtrekrc resources
+
+Resource	Type	Default		Meaning
+----------	------	--------------	--------------------------------------
+recordGame	Bool	off		Record game	
+recordFile	String  noFileName.trk	Record filename
+maxRecord	Int	0		Max. bytes to record, 0 for unlimited
+recordIndiv	Bool	off		Record indvidual (personal) messages
+confirmOverwrite Bool	on		Confirm before overwriting 
+					  existing file
+
+recordGame and recordFile can be overridden by command line arguments
+specifying either the record file or the playback file.
+
+If confirmOverwrite is on and you try to record over an existing file,
+you are given the option of overwriting it, disabling the recorder, or
+specifying a new record filename.  It's easy to forget which flag
+you're using and accidently wipe out an existing recording while
+trying to view it, so using this option is reccommended.
+
+
+To record a game:
+Either set recordGame (and optionally recordFile) in your .xtrekrc or
+add the arguments:  -R filename.trk 
+to the command line.  To make the recording compatible for viewing
+with the paradise client, add the -Z command line option (see Paradise
+Compatibility Mode below).
+
+The ` key can be used to toggle recording on and off during a game.
+If you are going to toggle recording off, make sure you wait at least
+a minute (maybe a few minutes to be safe):  you need to get
+certain packets sent near the start that identify your slot and
+specify the server features or else things will be screwed up on
+playback.  Toggling recording off and then turning it on a while later
+has unpredictable results.  If you miss a player logging in, that
+player will appear to be 'Independant'.  If someone changes teams you
+probably won't pick that up either.  If you want the recording to look
+good, don't use this key except to stop recording.
+
+
+
+To playback a game:
+<client> -F file.trk to playback the recording in "file.trk".   If
+viewing a game recorded with the paradise client, enable the Paradise
+Compatibility Mode mentioned below.  
+
+
+Playback controls:
+There's decent help available during playback, here it is again:
+
+Continuous Play Mode: 
+Enter this mode with 'C'.  Select the frames per second to use from
+1-9, (0 is max speed).  + and - increment/decrement the frames per
+second. 
+
+Frame at a time Mode:
+Enter this mode with 'F'.  The spacebar advances you a frame at a
+time through the recording.
+
+Scan Mode:
+Enter this mode with 'S'.  You can scan for the next occurance of:
+Red, Yellow, Green Alert, or Death.
+
+
+Switch between modes by hitting that mode's key (C, F, S).
+P pauses, Q quits, ? gives help on a key.  All commands work with
+upper/lower case (except + -).  If there's a command you want to use
+which is stolen by the playback stuff (e.g. P), you'll have to remap
+it in your keymap.
+
+
+Compatibility bugs with paradise:
+Paradise doesn't support short packets version 11 (it uses 10), or the
+SHIP_CAP feature.  If you don't record with paradise compatibility
+enabled, paradise playback will be screwed up badly (even then, the
+first ship may be messed up as viewed from paradise as it takes some
+time to tell the server to disable SHIP_CAP).  Conversely, if
+you don't playback a paradise recording in the brmh client with
+paradise compatibility enabled, things will also be screwed up.
+
+
+Paradise Compatibility Mode:  
+To enable paradise compatibility mode, add the flag "-Z" to your other
+client options.  Use this mode when recording or for playback to have
+compatibility with the paradise client.
+
+
+This compatibility mode will:
+Use short packets version 10 instead of the current version 11.  You
+may take a performance hit here if you play with fat UDP or with a lot
+of ploss.  The improvements of version 11 over version 10, in Heiko's
+words: 
+"Biggest improvements is if you play with fat UDP. Otherwise it's
+mostly good for playing with ploss.   PS: makes a difference of ~5%."
+
+Disable the SHIP_CAP feature in the client.  If you are recording
+while playing, the first ship still seems to use the SHIP_CAP feature,
+but after that it doesn't, so in paradise playback your first ship
+will look messed up but after that it will be fine.  If you are
+observing then paradise playback will be fine once you lock onto a
+ship.
+
+
+Implementation:
+For compatiblity with paradise recordings and for simpliclity, an
+extra packet type 127 is recorded by the client when the screen is
+redrawn so that we know when to display the packet info during
+playback (also, some information about T/P status is recorded in the
+fake packet).
+
+
+

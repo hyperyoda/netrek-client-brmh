@@ -1,0 +1,164 @@
+
+/* Do not edit.  See INSTALL for details. */
+
+#include "Netrek.tmpl"
+
+
+          TARGET = netrek
+#if SystemV
+   EXTRA_LIBS = -lBSD
+#endif
+   /* use -lX11 intead of $(XLIB) so Xext doesn't get included. */
+   SYS_LIBRARIES = -L/usr/lib/X11 -L/usr/X11/lib -lX11 $(MP_LIB) $(EXTRA_LIBS) -lm 
+  EXTRA_INCLUDES = -I. -I./bitmaps $(MP_INCLUDE) $(EXTRA_INCS)
+
+STD_HEADERS = Wlib.h bitmapstuff.h copyright.h copyright2.h data.h defs.h \
+	      packets.h version.h struct.h netrek.h
+
+#if ShortPackets
+WTEXT = wtext.h
+#endif
+
+      HEADERS = $(STD_HEADERS) $(WTEXT)
+
+#if DynamicBitmaps
+DYN_SRCS = bitmaps.c RotateBitmap.c
+DYN_OBJS = bitmaps.o RotateBitmap.o
+#endif
+
+#if BD_
+BD_SRCS = bd.c
+BD_OBJS = bd.o
+#endif
+
+#if SPTest
+SPTEST_SRCS = sptest.c
+SPTEST_OBJS = sptest.o
+#endif
+
+#if RSA_
+RSA_SRCS = rsa_box.c $(RSA_BOX_SRCS)
+RSA_OBJS = rsa_box.o $(RSA_BOX_OBJS)
+#endif
+
+#if !HaveRandom
+RAND_SRCS = random.c
+RAND_OBJS = random.o
+#endif
+
+#if !HaveRInt
+RINT_SRCS = rint.c
+RINT_OBJS = rint.o
+#endif
+
+#if Feature
+FEATURE_SRCS = feature.c feature_old.c macrowin.c distsend.c distress.c
+FEATURE_OBJS = feature.o feature_old.o macrowin.o distsend.o distress.o
+#endif
+
+/* Dashboard is no longer optional */
+DASHBOARD_SRCS = brmh-dashboard.c cow-dashboard.c text-dashboard.c
+DASHBOARD_OBJS = brmh-dashboard.o cow-dashboard.o text-dashboard.o
+
+#if FontBitmaps
+FONTBITMAP_SRCS = fontbm.c
+FONTBITMAP_OBJS = fontbm.o
+#endif
+
+#if ShortPackets
+SP_SRCS = spwarning.c
+SP_OBJS = spwarning.o
+#endif
+
+#if NetStat
+NETSTAT_SRCS = netstat.c lagmeter.c
+NETSTAT_OBJS = netstat.o lagmeter.o
+#endif
+
+#if Metaserver
+META_SRCS = metaserver.c
+META_OBJS = metaserver.o
+#endif
+
+#if Record || RecordDebug
+RECORD_SRCS = recorder.c
+RECORD_OBJS = recorder.o
+#endif
+
+SRCS = colors.c data.c death.c defaults.c defwin.c detonate.c dmessage.c \
+       enter.c entrywin.c findslot.c getdefaults.c getname.c \
+       getship.c helpwin.c inform.c input.c interface.c \
+       main.c mkdefault.c motdwin.c newwin.c option.c ping.c pingstats.c \
+       planetlist.c planets.c playerlist.c ranklist.c redraw.c reserved.c \
+       rotate.c sintab.c smessage.c socket.c stats.c udpopt.c util.c war.c \
+       warning.c x11window.c $(NETSTAT_SRCS) $(DYN_SRCS) $(BD_SRCS) \
+       $(SPTEST_SRCS) $(RSA_SRCS) $(RAND_SRCS) $(RINT_SRCS) $(FEATURE_SRCS) \
+       $(SP_SRCS) $(DASHBOARD_SRCS) $(FONTBITMAP_SRCS) $(META_SRCS) \
+       $(RECORD_SRCS)
+
+
+OBJS = colors.o data.o death.o defaults.o defwin.o detonate.o dmessage.o \
+       enter.o entrywin.o findslot.o getdefaults.o getname.o \
+       getship.o helpwin.o inform.o input.o interface.o \
+       main.o mkdefault.o motdwin.o newwin.o option.o ping.o pingstats.o \
+       planetlist.o planets.o playerlist.o ranklist.o redraw.o reserved.o \
+       rotate.o sintab.o smessage.o socket.o stats.o udpopt.o util.o war.o \
+       warning.o x11window.o $(NETSTAT_OBJS) $(RAND_OBJS) $(RINT_OBJS) \
+       $(DYN_OBJS) $(BD_OBJS) $(SPTEST_OBJS) $(RSA_OBJS) $(FEATURE_OBJS) \
+       $(SP_OBJS) $(DASHBOARD_OBJS) $(FONTBITMAP_OBJS) $(META_OBJS) \
+       $(RECORD_OBJS)
+
+AllTarget(randomize)
+NormalProgramTarget(randomize,randomize.o $(RAND_OBJS),,,)
+
+AllTarget($(TARGET))
+NormalProgramTargetRandomize($(TARGET),$(OBJS),,,,./randomize)
+InstallProgram($(TARGET),$(NETREK_BIN))
+DependTarget()
+
+#if RSA_
+NormalProgramTarget(mkkey,mkkey.o $(RAND_OBJS),,,)
+#endif
+
+#ifdef SaberProgramTarget
+SaberProgramTarget($(TARGET), $(SRCS), $(OBJS),$(LDLIBS),)
+#endif
+
+/* A test of the effects of putting all code in one file */
+NormalProgramTarget(netrektest,BIG.o,,,)
+
+BIG.c: protos.h
+	$(RM) allincludes.h
+	grep -h "^#include" $(SRCS) > allincludes.h
+	cat allincludes.h protos.h $(SRCS) > BIG
+	mv BIG BIG.c
+
+protos.h:
+	$(RM) protos.h
+	cproto -e -f3 -m -D__STDC__ -D_NO_DEPEND -DCPROTO $(EXTRA_DEFINES) $(ALLINCLUDES) $(SRCS) > protos.h
+
+World ::
+	$(MAKE) $(MFLAGS) depend
+	$(MAKE) $(MFLAGS) all
+
+/* for dec: the -O4 flag doesn't work with -c.  To build netrek, first 
+   build randomize, mkkey, and rsa-client.c and then make netrek:
+
+   make randomize mkkey rsa-client.c
+   make CDEBUGFLAGS=-O4 netrek.dec
+*/
+
+netrek.dec: 
+	$(RM) netrek
+	purify $(CC) $(CFLAGS) -o netrek `./randomize $(SRCS)` $(LDOPTIONS) \
+		$(LDLIBS) $(EXTRA_LOAD_FLAGS)
+
+NormalProgramTarget(xdebug_packets,xdebug_packets.o,,XawClientLibs,-lm)
+Protos(protos.h, $(SRCS))
+#ifdef SaberProgramTarget
+SaberProgramTarget(xdebug_packets, xdebug_packets.c, xdebug_packets.o,XawClientLibs,-lm)
+#endif
+
+
+proto-%: 
+	cproto -p -m -s -f3 -D__STDC__ -D_NO_DEPEND -DCPROTO $(EXTRA_DEFINES) $(ALLINCLUDES) $* | grep static

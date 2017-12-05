@@ -1,0 +1,493 @@
+# These are the default settings for BRMH-2.0.  Don't use this file as an
+# xtrekrc -- it will only slow down startup.  Instead, find the values you
+# wish to change and put them in your ~/.xtrekrc file.
+# Also see the macro and RCD documentation at the site where you got this
+# client.
+
+
+# All defaults variables support appending a server alias or server name
+# after the variable name.  The value specified will be used only if you are 
+# connected to that server.  Values are searched by server-name, then by alias
+# then by base variable name.
+# <feature>[.<alias/server-name>]: value
+
+# The default player name shown at the login window.
+name:                            guest
+
+# Password for auto-login
+password:                        something
+
+# Number of the default port to use if the -p flag isn't given.
+port:                            2592
+
+# Name of the default server to use if the -h flag isn't given.
+server:                          wormhole.ecst.csuchico.edu
+
+# Aliases.  Replace x.y.z with full server name, and specify <alias>
+# From then on you can specify that server by doing 'netrek -h <alias>'
+server.alias:                    x.y.z
+
+# Automatically log-in.  This field makes sense only if name
+# and password are also set, but with server aliasing this can be selected
+# on a server basis, i.e. autologin.bigbang: on
+autologin:			 off
+
+# if no server argument, use metaserver
+metaDefault:			 off
+
+# Default metaserver
+metaserver: metaserver.ecst.csuchico.edu
+
+# default metaserver port 
+metaport: 3521
+
+# disable meta cache
+metacachedisable:	off
+
+# Don't attempt to start ping packets from the server.
+dontPing:                        off
+
+# Try short-packets [HW] upon entering.
+tryShort:                        on
+
+# Use RSA by default.
+useRSA:                          on
+
+# Heuristics to minimize affects of dropped packets.
+droppedPacketsFix:               on
+
+# Try to use udp upon entering the game.
+tryUdp:                          on
+
+# 0 -- TCP, 1 -- simple UDP, 2 -- fat UDP
+udpClientReceive:		 1
+
+# 0 -- TCP, 1 -- simple UDP, 2 -- enforced UDP (state only)
+# 3 -- enforce UDP (state & weapon)
+udpClientSend:                   1
+
+# Level of UDP code debugging.
+udpDebug:                        0
+
+# Throw out udp packets that arrive out of order.
+udpSequenceChk:                  on
+
+# Pair of characters to use to show cloakers on the galactic map.
+cloakChars:                      ??
+
+# Stat clock: 0 -- no clock, 1 -- h:m, 2 -- h:m:s.
+clock:                           2
+
+# Color remapping.
+# Format: color.<color name>: <color-spec>
+# Color-spec can be a name [red] or #rgb [#f00, #ff0000]
+color.white:                     white
+color.black:                     black
+color.cyan:                      cyan
+color.green:                     green
+color.light grey:                light grey
+color.red:                       #ffbb00
+color.yellow:                    yellow
+
+# dashboard style: 0 -- text, 1 -- [LAB], 2 -- COW, 3 -- KRP (new COW).
+dashboardStyle:                  0
+
+# Specify degree between double phaser lines (0 means single line)
+enemyPhasers:                    0
+
+# Also use inside border to show alert status.
+extraAlertBorder:                on
+
+# If locks are shown, whether or not to fill the triangle.
+fillTriangle:                    off
+
+# Force black&white even if color supported.
+forceMono:                       off
+
+# Update galactic map frequently.
+galacticFrequent:                on
+
+# Smaller 'i' info window.
+newInfo:                         off
+
+# Use MOO planet bitmaps.
+newPlanetBitmaps:                off
+
+# Reduced stats format for the player list.  (Same as playerlist: nTRNKlM).
+newPlayerList:                   off
+
+# Configurable player list format. Letters correspond to fields, which are
+# n -- ship number
+# T -- ship type
+# R -- rank
+# N -- name
+# K -- kills
+# l -- login name
+# O -- offense
+# W -- wins
+# D -- defense
+# L -- losses
+# S -- stats (total ratings)
+# r -- ratio
+# d -- DI (normalized ratings * hours)
+# B -- bombing
+# b -- armies bombed
+# P -- planets
+# p -- planets taken
+# M -- client machine
+# H -- hours played
+# k -- max kills
+# V -- kills/hour
+# v -- deaths/hour
+playerlist:                       nTRNKWLrODd
+
+# Display phaser-hit points in the individual window. (See also phaserWindow.)
+phaserMsgI:                      off
+
+# Shrink and line up all kill messages.
+shortKillMesg:                   off
+
+# Galactic: 0 -- show owner, 1 -- show resoures, 2 -- show nothing
+showGalactic:                    1
+
+# Highlight independent planets with an X.
+showInd:                         off
+
+# Use a textured alert border (implied by forcemono).
+stippleBorder:			 off
+
+# Show Local: 0 -- owner, 1 -- resoures, 2 -- nothing, 3 -- rabbit-ears
+showlocal:                       1
+
+# 0 -- dont show lock, 1 -- show on galactic, 
+# 2 -- show on local, 3 -- show on both.
+showLock:                        3
+
+# Show planet names (0-off, 1-short, 2-normal)
+showPlanetNames:                 2
+
+# Show planet owner on galactic map with a team letter next to planet.
+showPlanetOwner:                 off
+
+# Player list: also show players not alive.
+showPlayerStatus:                off
+
+# Show ship shields
+showShields:                     on
+
+# Show stats window
+showStats:                       on
+
+# Sort player listings by team.
+sortPlayers:                     off
+
+# If off, only shows tractors for a short time.
+continueTractor:                 on
+
+# Show your own tractor/pressor.
+showTractorPressor:              on
+
+# Display the last message in the warning message window.
+useMsgw:                         off
+
+# Change shields to reflect damage.
+varyShields:                     off
+
+# Large font -- used to display number of players per team.
+bigfont:                         -*-lucidatypewriter-*-*-*-*-40-*-*-*-*-*-*-*
+
+# Bold font -- used for highlighting.
+boldfont:                        6x10
+
+# Default font.
+font:                            6x10
+
+# Italic font.
+italicfont:                      6x10
+
+# Message font
+mesgfont:			 6x10
+
+# Maps buttons to key functions.  Format: <button><key>...
+# See the help window for key descriptions.
+# <button> is in the range 1-3 if shiftedMouse is off.  
+# Otherwise the values are
+# 4 - shift+m1, 5 - shift+m2, 6 - shift+m3\n\
+# 7 - ctrl+m1, 8 - ctrl+m2, 9 - ctrl+m3\n\
+# a - shift+ctrl+m1, b - shift+ctrl+m2, c - shift+ctrl+m3
+buttonmap:                       1t2p3k4%5q6#7u8c9iaTbyc;
+
+# Enable fast quit key 'q'
+enableFastQuit:                  off
+
+# Control keys keymap. Format <new key><old key> ...
+# Any combination of normal keys and control keys can be mapped to one
+# another.  In other words, you can map from control key to control key
+# control key to normal key, normal key to normal key, and normal key
+# to control key.
+#  
+# New format for ckeymap is:
+# c = any printable ascii character.
+# ^ = introduce control mapping (the key '^' not control + key.)
+#  
+# Each entry is a pair, like:
+# cc              # regular format
+# c^c             # regular->control
+# ^cc             # control->regular
+# ^c^c            # control->control
+ckeymap:                         ^a^a^b^b^c^c
+
+# Maps new keys to old keys. Format: <new key><old key><new key><old key>...
+keymap:                          aabbcc
+
+# Name of key to use for macro escape [TAB,ESC, or <key>].
+macroKey:                        x
+
+# Message logging file.
+logFile:                         /tmp/Netrek.Messages.Rec
+
+# RCD. Format: dist[.key].[RCD description]: <macro>
+# If key is given, it is interpreted as a control key.  RCD documentation is
+# too extensive to go into here.  See the documenation file on the site where
+# you got this client.
+dist.z.pickup:                   %T%c->%O %p++ @ %L
+
+# Macros.  Format: mac.<key>.<destination>:  <macro>
+# Macros are activated by typing the macro key followed by <key>.
+# However, if the key occurs in 'singleMacro', the macro key isn't needed.
+# Macro documentation is too extensive to go into here.  See the documentation
+# file on the site where you got this client.
+mac.k.T:                         Macro test
+
+# Single key macro keys. Format: singleMacro: <key><key>
+# Key may be a normal key or a control key [preceded by '^'].  All keys
+# that appear in this list that are also macro definitions [mac.] will not
+# require the macro key to activate.
+singleMacro:                     ^t
+
+# Keep peace with races after death.
+keepPeace:                       on
+
+# Log messages.
+logMessage:                      off
+
+# Lag stats update: 1 -- least often, 10 -- most often.
+netStatFreq:                     5
+
+# Keep lag statistics.
+netstats:                        on
+
+# Server-dependent. Should be on for all new servers.
+newMesgFlags:                    on
+
+# Show kill messages.
+reportKills:                     on
+
+# Show kill messages in the review (all messages) window.
+reportKillsInReview:		 on
+
+# Show all-board messages in the review (all messages) window.
+reportAllInReview:               on
+
+# Show team-board messages in the review (all messages) window.
+reportTeamInReview:              on
+
+# Show individual messages in the review (all messages) window.
+reportIndInReview:               on
+
+# Show phaser messages in the review (all messages) window.
+reportPhaserInReview:            off
+
+# Warp the mouse to the message window during message send.
+warp:                            off
+
+# Number of updates per second (most servers limit to 5).
+updatesPerSecond:                5
+
+# Default ship to use on button-click entry (SC,DD,CA,BB,AS,SB).
+defaultShip:                     CA
+
+# Tactical Text Solution for the Tactical Tunnel Syndrome.
+tts:                             off
+
+# TTS msg color.
+tts_color:                       #666
+
+# TTS font.
+tts_font:                        -b&h-lucida-bold-r-normal-sans-17-*
+
+# Length of text displayed on tactical.
+tts_len:                         40
+
+# Y location of text on local.
+tts_loc:                         234
+
+# How long text remains on tactical.
+tts_time:                        25
+
+# Fast clear (blank entire tactical each time), good for xterms
+fastClear:			off
+
+# Use shift and/or ctrl + mouse for more mouse functions
+shiftedMouse:			off
+
+# Shrink phaser lines over fuse-length of phaser
+shrinkPhasers:                   off
+
+# Degree of shrinkage [ranges from 5-15, 5 being most shrinkage]
+shrinkPhasersAmount:		 10
+
+# Show phaser-hit messages in seperate window.  See also review_phaser
+# for default mapping and geometry (message widths 13, 32, 80 supported).
+phaserWindow:                    on
+
+# Puck name [used by the client along with puckHost to determine the hockey
+# puck.
+puckName:			Puck
+
+# Puck host [used by the client along with puckName to determine the hockey
+# puck.
+puckHost:			Nowhere
+
+# Fed choose team window
+FED.mapped:                      off
+FED.geometry:                    100x100+0+400
+FED.parent:                      local
+
+# Kli choose team window
+KLI.mapped:                      off
+KLI.geometry:                    100x100+200+400
+KLI.parent:                      local
+
+# Ori choose team window
+ORI.mapped:                      off
+ORI.geometry:                    100x100+300+400
+ORI.parent:                      local
+
+# Rom choose team window
+ROM.mapped:                      off
+ROM.geometry:                    100x100+100+400
+ROM.parent:                      local
+
+# UDP window [+]
+UDP.mapped:                      off
+UDP.geometry:                    40x10+510+6
+UDP.parent:                      root
+
+# help window [h]
+help.mapped:                     off
+help.geometry:                   160x21+0+548
+help.parent:                     root
+
+# lag meter [/]
+lagMeter.geometry:               74x124+0+600
+lagMeter.mapped:                 off
+lagMeter.parent:                 root
+
+# Tactical window
+local.mapped:                    off
+local.geometry:                  500x500-4-4
+local.parent:                    netrek
+
+# Galactic window
+map.mapped:                      off
+map.geometry:                    500x500+500-4
+map.parent:                      netrek
+
+# Send-message window
+message.mapped:                  off
+message.geometry:                500x20+500+524
+message.parent:                  netrek
+
+# Top window
+netrek.geometry:                 1004x548+0+0
+netrek.parent:                   root
+
+# Icon window
+netrek_icon.geometry:            112x80+0+0
+netrek_icon.parent:              root
+
+# Option menus [O]
+option.mapped:                   off
+option.geometry:                 35x19+510+6
+option.parent:                   netrek
+
+# Ping stats window [,]
+pingStats.mapped:                off
+pingStats.geometry:              294x110+0+600
+pingStats.parent:                root
+
+# Planet list [P]
+planet.mapped:                   off
+planet.geometry:                 53x43+10+10
+planet.mapped:                   off
+planet.parent:                   local
+
+# Player list [L]
+player.mapped:                   off
+player.geometry:                 83x23+0+548
+player.parent:                   root
+
+# QUIT button (choose team window)
+quit.mapped:                     off
+quit.geometry:                   100x100+400+400
+quit.parent:                     local
+
+# Rank window [U]
+rank.mapped:                     off
+rank.geometry:                   65x17+50+300
+rank.parent:                     local
+
+# ->ALL/team/individual messages window
+review.mapped:                   off
+review.geometry:                 80x20+504+552
+review.parent:                   root
+
+# ->ALL messages window
+review_all.mapped:               off
+review_all.geometry:             80x10+504+552
+review_all.parent:               root
+
+# Kills window
+review_kill.mapped:              off
+review_kill.geometry:            80x6+504+778
+review_kill.parent:              root
+
+# Phaser points window
+review_phaser.mapped:            off
+review_phaser.geometry:          80x4+504+718
+review_phaser.parent:            root
+
+# Team messages window
+review_team.mapped:              off
+review_team.geometry:            80x5+504+664
+review_team.parent:              root
+
+# Individual messages window
+review_your.mapped:              off
+review_your.geometry:            80x4+504+726
+review_your.parent:              root
+
+# Shield/Dam/Fuel/Wtemp/Etemp stat bars
+stats.geometry:                  160x95+422+13
+stats.parent:                    root
+
+# Tactical stat bar [or dashboard]
+tstat.mapped:                    off
+tstat.geometry:                  500x44-4+500
+tstat.parent:                    netrek
+
+# War window [W]
+war.mapped:                      off
+war.geometry:                    20x6+510+6
+war.parent:                      netrek
+
+# Warning window
+warn.mapped:                     off
+warn.geometry:                   500x20+500+500
+warn.parent:                     netrek
+
+# Macros/Features/RCD window
+macroWin.mapped:                 off
+macroWin.geometry:               +500+0
+macroWin.parent:                 root
