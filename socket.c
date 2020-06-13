@@ -3102,8 +3102,9 @@ handleReserved(packet)
 #endif
 
 #if !defined(BORG)
-   encryptReservedPacket(packet, &response, serverName, me->p_no);
-   sendServerPacket((struct player_spacket *) & response);
+   // XXXX stops playback
+   //   encryptReservedPacket(packet, &response, serverName, me->p_no);
+   //  sendServerPacket((struct player_spacket *) & response);
 #endif				/* defined(BORG) */
 }
 

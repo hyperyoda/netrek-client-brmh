@@ -1623,6 +1623,40 @@ W_SpNextEvent(wevent)
 	 case Button2:
 	    wevent->key = W_MBUTTON;
 	    break;
+	    // make the additional mouse buttons work by faking
+	    // shift and control presses
+	 case Button4:
+	    wevent->key = W_LBUTTON + W_SHIFTBUTTON;
+	    break;
+	 case Button5:
+	    wevent->key = W_MBUTTON + W_SHIFTBUTTON;
+	    break;
+	 case 6:
+	    wevent->key = W_RBUTTON + W_SHIFTBUTTON;
+	    break;
+	 case 7:
+	    wevent->key = W_LBUTTON + W_CTRLBUTTON;
+	    break;
+	 case 8:
+	    wevent->key = W_MBUTTON + W_CTRLBUTTON;
+	    break;
+	 case 9:
+	    wevent->key = W_RBUTTON + W_CTRLBUTTON;
+	    break;
+	 case 10:
+	    wevent->key = W_LBUTTON + W_CTRLBUTTON + W_SHIFTBUTTON;
+	    break;
+	 case 11:
+	    wevent->key = W_MBUTTON + W_CTRLBUTTON + W_SHIFTBUTTON;
+	    break;
+	 case 12:
+	    wevent->key = W_RBUTTON + W_CTRLBUTTON + W_SHIFTBUTTON;
+	    break;
+#ifdef DEBUG // XXXX
+	 default:
+	   printf("button %d\n", button->button );
+	   break;
+#endif
 	 }
 	 
 	 if(extended_mouse){
@@ -3090,7 +3124,7 @@ W_TTSTextWidth(s, l)
    char	*s;
    int	l;
 {
-   return XTextWidth(_tts_fontinfo, s, l);
+  return XTextWidth(_tts_fontinfo, s, l); /* xxxx dying here */
 }
 
 void
