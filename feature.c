@@ -4,8 +4,7 @@
  * March, 1994.    Joe Rumsey, Tedd Hadley
  * 
  * most of the functions needed to handle SP_FEATURE/CP_FEATURE packets.  fill
- * in the features list below for your client, and add a call to
- * reportFeatures just before the RSA response is sent. handleFeature should
+ * in the features list below for your client. handleFeature should
  * just call checkFeature, which will search the list and set the appropriate
  * variable.  features unknown to the server are set to the desired value for
  * client features, and off for server/client features.
@@ -46,7 +45,6 @@ struct feature {
    char            feature_type;/* 'S' or 'C' for server/client */
    int             value;	/* desired status */
    char           *arg1, *arg2;	/* where to copy args, if non-null */
-   int		   send_w_rsa;	/* send with RSA */
 };
 
 #define FEATURE_ON	1
@@ -85,6 +83,8 @@ struct feature  features[] =
       ALREADY_SENT},
    {"UPS", &F_ups, 'S', FEATURE_ON, 0, 0,
       ALREADY_SENT},
+   {"TIPS", &F_tips, 'S', FEATURE_ON, 0, 0, 
+      SEND_FEATURE},
    {0, 0, 0, 0, 0, 0}
 };
 
@@ -141,44 +141,11 @@ checkFeature(packet)
       fprintf(stderr, "Feature %s from server unknown to client!\n", 
 	      packet->name);
    }
-   else if (!strcmp(features[i].name, "UPS"))
+   if (features[i].name && !strcmp(features[i].name, "UPS"))
    {
        cloak_phases = F_ups * 2 - 3;
        if (cloak_phases < 3)
            cloak_phases = 3;
-   }
-}
-
-/* call this from handleRSAKey, before sending the response. */
-void
-reportFeatures()
-{
-   struct feature *f;
-
-#ifdef RECORD_DEBUG
-   fprintf(RECORDFD, "F_server_feature_packets=%d\n",
-	   F_server_feature_packets);
-#endif
-
-   if (!F_server_feature_packets)
-      return;
-
-
-   for (f = features; f->name != 0; f++) {
-      if(f->send_w_rsa)
-	 sendFeature(f->name,
-		     f->feature_type,
-		     f->value,
-		     (f->arg1 ? *f->arg1 : 0),
-		     (f->arg2 ? *f->arg2 : 0));
-      /* otherwise it was already sent (FEATURE_PACKETS, MOTD_BITMAPS) */
-#ifdef RECORD_DEBUG
-      fprintf(RECORDFD,
-	      "Send:(C->S) %s (%c): %d\n", f->name, f->feature_type, f->value);
-#endif
-#ifdef DEBUG
-      printf("(C->S) %s (%c): %d\n", f->name, f->feature_type, f->value);
-#endif
    }
 }
 
@@ -262,12 +229,9 @@ int paradise_feature_fix()
       f->value = 0;
       f->arg1 = NULL;
       f->arg2 = NULL;
-      f->send_w_rsa = 0;
       *****/
       /* Don't wipe it out, turn it off */
       f->value = 0;
-      f->send_w_rsa = 0;   /* We sent it earlier with FEATURE_PACKETS and
-			      MOTD_BITMAPS (from main) */
     }
   }
   return 0;

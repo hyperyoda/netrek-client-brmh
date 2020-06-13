@@ -146,7 +146,6 @@ static void handleStats P_((struct stats_spacket * packet));
 static void handlePlyrInfo P_((struct plyr_info_spacket * packet));
 static void handlePlanetLoc P_((struct planet_loc_spacket * packet));
 static void handleReserved P_((struct reserved_spacket * packet));
-static void handleRSAKey P_((struct rsa_key_spacket * packet));
 static void handleFeature P_((struct feature_spacket * packet));
 static void handleUdpReply P_((struct udp_reply_spacket * packet));
 static void handleSequence P_((struct sequence_spacket * packet));
@@ -203,11 +202,7 @@ struct packet_handler handlers[] =
    {sizeof(struct udp_reply_spacket), handleUdpReply},	/* SP_UDP_STAT */
    {sizeof(struct sequence_spacket), handleSequence},	/* SP_SEQUENCE */
    {sizeof(struct sc_sequence_spacket), handleSequence},	/* SP_SC_SEQUENCE */
-#ifdef RSA
-   {sizeof(struct rsa_key_spacket), handleRSAKey},	/* SP_RSA_KEY */
-#else
    {0, exit},			/* #31, and exit won't really be called */
-#endif
    {sizeof(struct motd_pic_spacket), handleMotdPic},
    {0, exit},			/* 33 */
    {0, exit},			/* 34 */
@@ -307,11 +302,7 @@ int             sizes[] =
 #endif
    sizeof(struct udp_req_cpacket),	/* CP_UDP_REQ */
    sizeof(struct sequence_cpacket),	/* CP_SEQUENCE */
-#ifdef RSA
-   sizeof(struct rsa_key_cpacket),	/* CP_RSA_KEY */
-#else
    0,				/* 37 */
-#endif
    0,				/* 38 */
    0,				/* 39 */
    0,				/* 40 */
@@ -3111,103 +3102,10 @@ handleReserved(packet)
 #endif
 
 #if !defined(BORG)
-#ifndef RSA
    encryptReservedPacket(packet, &response, serverName, me->p_no);
    sendServerPacket((struct player_spacket *) & response);
-#else
-
-   if (RSA_Client) {		/* can use -o option for old blessing */
-      /* client sends back a 'reserved' packet just saying RSA_VERSION info */
-      /*
-       * theoretically, the server then sends off a rsa_key_spacket * for the
-       * client to then respond to
-       */
-      warning(RSA_VERSION);
-      strncpy(response.resp, RSA_VERSION, RESERVED_SIZE);
-      MCOPY(packet->data, response.data, RESERVED_SIZE);
-      response.type = CP_RESERVED;
-#ifdef DEBUG
-      printf("Sending RSA reserved response\n");
-#endif
-   } else {
-#ifdef FEATURE
-      /*
-       * If server gods don't like NEWMACRO/SMARTMACRO they better install
-       * RSA...
-       */
-      F_UseNewMacro = 1;
-      F_UseSmartMacro = 1;
-#endif
-      encryptReservedPacket(packet, &response, serverName, me->p_no);
-   }
-
-   sendServerPacket(&response);
-
-#endif				/* RSA */
 #endif				/* defined(BORG) */
 }
-
-#ifdef RSA
-static void
-handleRSAKey(packet)
-    struct rsa_key_spacket *packet;
-{
-   struct rsa_key_cpacket response;
-   struct sockaddr_in saddr;
-   unsigned char  *data;
-   int             len;
-#ifdef GATEWAY
-   extern unsigned long netaddr;
-   extern int      serv_port;
-#endif
-
-#ifdef GATEWAY
-   /* if we didn't get it from -H, go ahead and query the socket */
-   if (netaddr == 0) {
-      len = sizeof(saddr);
-      if (getpeername(sock, (struct sockaddr *) & saddr, &len) < 0) {
-	 perror("getpeername(sock)");
-	 exit(1);
-      }
-   } else {
-      saddr.sin_addr.s_addr = netaddr;
-      saddr.sin_port = htons(serv_port);
-   }
-#else
-   /* query the socket to determine the remote host (ATM) */
-   len = sizeof(saddr);
-   if (getpeername(sock, (struct sockaddr *) & saddr, &len) < 0) {
-      perror("getpeername(sock)");
-      exit(1);
-   }
-#endif
-
-   data = packet->data;
-   MCOPY(&saddr.sin_addr.s_addr, data, sizeof(saddr.sin_addr.s_addr));
-   data += sizeof(saddr.sin_addr.s_addr);
-   MCOPY(&saddr.sin_port, data, sizeof(saddr.sin_port));
-
-   rsa_black_box(response.resp, packet->data,
-		 response.public, response.global);
-
-   response.type = CP_RSA_KEY;
-
-   sendServerPacket(&response);
-
-#ifdef FEATURE
-#ifdef RECORD
-   if(paradise_compat)
-     paradise_feature_fix();
-#endif
-
-   reportFeatures();
-#endif
-
-   /* #ifdef DEBUG */
-   printf("RSA verification requested.\n");
-   /* #endif */
-}
-#endif
 
 #ifdef FEATURE
 static void

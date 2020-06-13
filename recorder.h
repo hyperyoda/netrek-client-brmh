@@ -8,7 +8,6 @@
 #endif
 
 #define RECORDPACKET(p) ( \
-(p) != SP_RSA_KEY && \
 (p) != SP_MOTD && \
 (p) != SP_MOTD_PIC )
 

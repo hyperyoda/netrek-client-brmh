@@ -1,18 +1,6 @@
 BRMH 2.5 Changelog
-Zachary Uram <netrek@gmail.com>
-Sept. 3, 2009
-
-General changes:
-- Fixed some config issues
-- Fixed some compiler warnings
-
-Code changes:
-- Added decimal precision conformance for displayed stats for improved accuracy.
-
-
-BRMH 2.5 Changelog
 Karthik Arumugham <karthik@karthik.com>
-Oct 22, 2007
+Oct 8, 2007
 
 General changes:
 - Updated maintainer address

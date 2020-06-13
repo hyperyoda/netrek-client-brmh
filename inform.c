@@ -31,7 +31,6 @@ inform(ww, x, y, key)
     char            key;
 {
    char            buf[BUFSIZ];
-   char            f22buf[8], *f22b = f22buf;
    int             line = 0;
    register struct player *j;
    register struct planet *k;
@@ -182,27 +181,19 @@ inform(ww, x, y, key)
 	 strcpy (buf, "        Rating    Total");
 	 W_WriteText (infow, W_Textwidth, W_Textheight * line++, playerColor (j), buf, strlen (buf),
                        W_RegularFont);
-         f22b = itof22(f22buf, bombingRating (j));
-         *f22b = '\0';
-	 sprintf (buf, "Bombing: %s  %5d", f22buf,
+	 sprintf (buf, "Bombing: %5.2f  %5d", bombingRating (j),
                    j->p_stats.st_armsbomb + j->p_stats.st_tarmsbomb);
 	 W_WriteText (infow, W_Textwidth, W_Textheight * line++, playerColor (j), buf, strlen (buf),
                        W_RegularFont);
-         f22b = itof22(f22buf, planetRating (j));
-         *f22b = '\0';
-	 sprintf (buf, "Planets: %s  %5d", f22buf,
+	 sprintf (buf, "Planets: %5.2f  %5d", planetRating (j),
                    j->p_stats.st_planets + j->p_stats.st_tplanets);
 	 W_WriteText (infow, W_Textwidth, W_Textheight * line++, playerColor (j), buf, strlen (buf),
                        W_RegularFont);
-         f22b = itof22(f22buf, offenseRating (j));
-         *f22b = '\0';
-	 sprintf (buf, "Offense: %s  %5d", f22buf,
+	 sprintf (buf, "Offense: %5.2f  %5d", offenseRating (j),
                    j->p_stats.st_kills + j->p_stats.st_tkills);
 	 W_WriteText (infow, W_Textwidth, W_Textheight * line++, playerColor (j), buf, strlen (buf),
                        W_RegularFont);
-         f22b = itof22(f22buf, defenseRating (j));
-         *f22b = '\0';
-	 sprintf (buf, "Defense: %s  %5d", f22buf,
+	 sprintf (buf, "Defense: %5.2f  %5d", defenseRating (j),
                    j->p_stats.st_losses + j->p_stats.st_tlosses);
 	 W_WriteText (infow, W_Textwidth, W_Textheight * line++, playerColor (j), buf, strlen (buf),
                        W_RegularFont);

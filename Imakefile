@@ -9,8 +9,8 @@
    EXTRA_LIBS = -lBSD
 #endif
    /* use -lX11 intead of $(XLIB) so Xext doesn't get included. */
-   SYS_LIBRARIES = -L/usr/lib/X11 -L/usr/X11/lib -lX11 $(MP_LIB) $(EXTRA_LIBS) -lm 
-  EXTRA_INCLUDES = -I. -I./bitmaps $(MP_INCLUDE) $(EXTRA_INCS)
+   SYS_LIBRARIES = -L/usr/lib/X11 -L/usr/X11/lib -lX11 $(EXTRA_LIBS) -lm 
+  EXTRA_INCLUDES = -I. -I./bitmaps $(EXTRA_INCS)
 
 STD_HEADERS = Wlib.h bitmapstuff.h copyright.h copyright2.h data.h defs.h \
 	      packets.h version.h struct.h netrek.h
@@ -34,11 +34,6 @@ BD_OBJS = bd.o
 #if SPTest
 SPTEST_SRCS = sptest.c
 SPTEST_OBJS = sptest.o
-#endif
-
-#if RSA_
-RSA_SRCS = rsa_box.c $(RSA_BOX_SRCS)
-RSA_OBJS = rsa_box.o $(RSA_BOX_OBJS)
 #endif
 
 #if !HaveRandom
@@ -92,7 +87,7 @@ SRCS = colors.c data.c death.c defaults.c defwin.c detonate.c dmessage.c \
        planetlist.c planets.c playerlist.c ranklist.c redraw.c reserved.c \
        rotate.c sintab.c smessage.c socket.c stats.c udpopt.c util.c war.c \
        warning.c x11window.c $(NETSTAT_SRCS) $(DYN_SRCS) $(BD_SRCS) \
-       $(SPTEST_SRCS) $(RSA_SRCS) $(RAND_SRCS) $(RINT_SRCS) $(FEATURE_SRCS) \
+       $(SPTEST_SRCS) $(RAND_SRCS) $(RINT_SRCS) $(FEATURE_SRCS) \
        $(SP_SRCS) $(DASHBOARD_SRCS) $(FONTBITMAP_SRCS) $(META_SRCS) \
        $(RECORD_SRCS)
 
@@ -104,7 +99,7 @@ OBJS = colors.o data.o death.o defaults.o defwin.o detonate.o dmessage.o \
        planetlist.o planets.o playerlist.o ranklist.o redraw.o reserved.o \
        rotate.o sintab.o smessage.o socket.o stats.o udpopt.o util.o war.o \
        warning.o x11window.o $(NETSTAT_OBJS) $(RAND_OBJS) $(RINT_OBJS) \
-       $(DYN_OBJS) $(BD_OBJS) $(SPTEST_OBJS) $(RSA_OBJS) $(FEATURE_OBJS) \
+       $(DYN_OBJS) $(BD_OBJS) $(SPTEST_OBJS) $(FEATURE_OBJS) \
        $(SP_OBJS) $(DASHBOARD_OBJS) $(FONTBITMAP_OBJS) $(META_OBJS) \
        $(RECORD_OBJS)
 
@@ -115,10 +110,6 @@ AllTarget($(TARGET))
 NormalProgramTargetRandomize($(TARGET),$(OBJS),,,,./randomize)
 InstallProgram($(TARGET),$(NETREK_BIN))
 DependTarget()
-
-#if RSA_
-NormalProgramTarget(mkkey,mkkey.o $(RAND_OBJS),,,)
-#endif
 
 #ifdef SaberProgramTarget
 SaberProgramTarget($(TARGET), $(SRCS), $(OBJS),$(LDLIBS),)
@@ -140,18 +131,6 @@ protos.h:
 World ::
 	$(MAKE) $(MFLAGS) depend
 	$(MAKE) $(MFLAGS) all
-
-/* for dec: the -O4 flag doesn't work with -c.  To build netrek, first 
-   build randomize, mkkey, and rsa-client.c and then make netrek:
-
-   make randomize mkkey rsa-client.c
-   make CDEBUGFLAGS=-O4 netrek.dec
-*/
-
-netrek.dec: 
-	$(RM) netrek
-	purify $(CC) $(CFLAGS) -o netrek `./randomize $(SRCS)` $(LDOPTIONS) \
-		$(LDLIBS) $(EXTRA_LOAD_FLAGS)
 
 NormalProgramTarget(xdebug_packets,xdebug_packets.o,,XawClientLibs,-lm)
 Protos(protos.h, $(SRCS))

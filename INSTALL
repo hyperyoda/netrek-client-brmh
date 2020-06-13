@@ -7,33 +7,15 @@ BUILDING A BINARY
 
 INSTALLATION
    
-   1. Edit Netrek.tmpl, checking and/or setting CC, CDEBUGFLAGS, _RSA.
-      If you want to use RSA, define MP_LIB (gnu MP) and MP_INCLUDE (gnu MP).
-      If you don't have it, the GNU mp library is available from
-      ftp://ftp.gnu.org/ or ftp://ftp.netrek.org/pub/netrek/gmp/.
+   1. Edit Netrek.tmpl, checking and/or setting CC, CDEBUGFLAGS.
       Set defined OPTIONS/FEATURES as desired to YES/NO.
-      If you're not using RSA, set RSA_ to NO and skip to step 4.
-      
-   2. RSA: Get the latest RES-RSA code from
-      ftp://ftp.netrek.org/pub/netrek/rsa/.
-      It is now legal to export RES-RSA.  Contact vanilla-list@us.netrek.org
-      or Dave Ahn (ahn@users.sourceforge.net) for details.
-
-   3. RSA: 
-      * xmkmf
-      * make mkkey
-      * If you have the secret RSA key already, do 'mkkey -k <key-file>'
-	 otherwise:
-      * mkkey key_name client_type architecture/OS creator comments
-        (Be sure to quote arguments that have spaces or special shell 
-	 characters)
-      
-   4. xmkmf; make depend ; make
+            
+   2. xmkmf; make depend ; make
 
 CLIENT DETAILS
    
    * ./netrek -u for a description of command line options.
-   * ./netrek -v for RSA version information
+   * ./netrek -v for version information
    * At runtime, select "show help window" for a list of commands.
    * At runtime, type ^s to display the list of features/macros/RCDs
 

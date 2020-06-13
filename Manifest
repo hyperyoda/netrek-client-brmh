@@ -76,13 +76,6 @@ redraw.c
 reserved.c
 rint.c
 rotate.c
-rsa/
-rsa_box.c@
-rsa_box_0.c@
-rsa_box_1.c@
-rsa_box_2.c@
-rsa_box_3.c@
-rsa_box_4.c@
 sintab.c
 smessage.c
 socket.c

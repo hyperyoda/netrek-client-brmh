@@ -408,16 +408,6 @@ struct def {
 	 { 0, NULL, NULL },
       },
    },
-#ifdef RSA
-   {
-      "useRSA", BOOL_DEF, "Use RSA checking",
-      &RSA_Client, 
-      {
-	 { 0, NULL, "" },
-	 { 0, NULL, NULL },
-      },
-   },
-#endif
    {
       "varyShields", BOOL_DEF, "Show shield damage by color",
       &VShieldBitmaps,

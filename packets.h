@@ -59,7 +59,7 @@
 #define SP_SEQUENCE     29	/* sequence # packet */
 #define SP_SC_SEQUENCE  30	/* this trans is semi-critical info */
 
-#define SP_RSA_KEY	31	/* handles binary verification */
+#define SP_RSA_KEY	31	/* handles binary verification */ (20090726: Deprecated)
 #define SP_MOTD_PIC	32	/* motd bitmap pictures (paradise) */
 
 #define SP_SHIP_CAP 	39	/* Handles server ship mods */
@@ -136,7 +136,7 @@
 #define CP_UDP_REQ      35	/* request UDP on/off */
 #define CP_SEQUENCE     36	/* sequence # packet */
 
-#define CP_RSA_KEY      37	/* handles binary verification */
+#define CP_RSA_KEY      37	/* handles binary verification */ (20090726: Deprecated)
 
 #define CP_PING_RESPONSE 42	/* client response */
 
@@ -711,27 +711,6 @@ struct planet_loc_spacket {
    int            y;
    char            name[16];
 };
-
-
-/* #ifdef RSA */
-struct rsa_key_spacket {
-   char            type;	/* SP_RSA_KEY */
-   char            pad1;
-   char            pad2;
-   char            pad3;
-   unsigned char   data[KEY_SIZE];
-};
-
-struct rsa_key_cpacket {
-   char            type;	/* CP_RSA_KEY */
-   char            pad1;
-   char            pad2;
-   char            pad3;
-   unsigned char global[KEY_SIZE];
-   unsigned char   public[KEY_SIZE];
-   unsigned char   resp[KEY_SIZE];
-};
-/* #endif RSA */
 
 /* #ifdef SHORT_PACKETS */
 

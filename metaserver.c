@@ -53,7 +53,6 @@ struct servers {
    int             players;
    int             status;
    char            flag;
-   int             RSA_client;
 };
 
 static struct servers *serverlist;
@@ -263,21 +262,6 @@ readmeta(fsock, cache_read)
 	    /* can't handle paradise servers */
 	    serverlist[num_servers].status = -1;
 
-	 if (strrchr(misc + 15, 'R'))
-	    serverlist[num_servers].RSA_client = 1;
-	 else
-	    serverlist[num_servers].RSA_client = 0;
-
-#if 0	/* concept of default server and you don't play anywhere else
-	   is contrary to netrek philosophy :) */
-	 /* check default */
-	 if (strcmpi(serverlist[num_servers].address, serverName) == 0
-	     && serverlist[num_servers].port == xtrekPort){
-	    serverlist[num_servers].def = 1;
-	    def_found = 1;
-	 }
-#endif
-
 	 switch (serverlist[num_servers].status) {
 	 case KEY_OPEN:
 	 case KEY_WAITQ:
@@ -468,9 +452,6 @@ metaaction(metafile, data)
       xtrekPort = serverlist[data->y].port;
       serverName = strdup(serverlist[data->y].address);/* leak xxx */
 
-#ifdef RSA
-      RSA_Client = serverlist[data->y].RSA_client;
-#endif
       serverAlias = getalias(serverName);
 
 

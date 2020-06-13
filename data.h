@@ -109,11 +109,6 @@ extern char	*serverNameRemote;
 extern int      messageon;
 extern int      warp;
 
-#ifdef RSA
-/* extern char testdata[]; Not needed in RSA 2.0 */
-extern int      RSA_Client;
-#endif
-
 #ifdef NBT
 extern struct macro_list macro[];	/* NBT 2/26/93 */
 extern int      MacroMode;
@@ -358,6 +353,7 @@ extern int	F_phaser_multi_send;
 extern int	F_ship_cap;
 extern int  F_fps;
 extern int  F_ups;
+extern int  F_tips;
 #endif
 
 extern int	abbr_kmesg;
