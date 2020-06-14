@@ -1652,11 +1652,6 @@ W_SpNextEvent(wevent)
 	 case 12:
 	    wevent->key = W_RBUTTON + W_CTRLBUTTON + W_SHIFTBUTTON;
 	    break;
-#ifdef DEBUG // XXXX
-	 default:
-	   printf("button %d\n", button->button );
-	   break;
-#endif
 	 }
 	 
 	 if(extended_mouse){
@@ -3124,7 +3119,7 @@ W_TTSTextWidth(s, l)
    char	*s;
    int	l;
 {
-  return XTextWidth(_tts_fontinfo, s, l); /* xxxx dying here */
+  return XTextWidth(_tts_fontinfo, s, l);
 }
 
 void

@@ -6,9 +6,9 @@
 static char    *Program_Version = "$Revision: 1.4 $   Compiled on $Date: 2000/03/23 03:44:26 $";
 #endif
 
-#define VERSION	       "2.6.0.0.0.0.1"
+#define VERSION	       "2.6.0"
 #define CLIENTNAME     "BRMH"
-#define CLIENTOS       "TwinkOS"
+#define CLIENTOS       "Linux"
 #define MAINTENANCE    "karthik@karthik.com"
 #define URL_NETREK     "http://www.netrek.org/"
 #define URL_XTREKRC    "ftp://ftp.netrek.org/pub/netrek/clients/brmh/bin/BRMH-xtrekrc"
