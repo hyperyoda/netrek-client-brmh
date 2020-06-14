@@ -100,12 +100,6 @@
 #define TRACTEHEAT  5		/* ammount tractor beams heat engines */
 #define TRACTCOST   20		/* fuel cost of activated tractor beam */
 
-
-#ifdef RSA
-/* string must begin with characters "RSA v" */
-#define RSA_VERSION "RSA v2.0 CLIENT (standard 2)"
-#endif
-
 #define KEY_SIZE 32
 #define RESERVED_SIZE 16
 #define MSG_LEN 80

@@ -150,11 +150,6 @@ int             debug = 0;
 int             messageon = 0;
 int             warp = 0;
 
-#ifdef RSA
-/* char testdata[16]; Not needed in RSA 2.0 */
-int             RSA_Client = 1;
-#endif
-
 #ifdef NBT
 struct macro_list macro[MAX_MACRO];	/* NBT 2/26/93 */
 int             MacroMode = 0;
@@ -274,12 +269,9 @@ W_Window        udpWin;
 W_Window	phaserwin;
 W_Window	motdWin;
 
-#ifdef EM
-int             sortPlayers = 0;
-int             sortPlayersObs = 0;
+int             sortPlayers = 1;
+int             sortPlayersObs = 1;
 int             teamOrder = 0;   /* DBP */
-#endif
-
 
 #ifdef ROTATERACE
 int             rotate = 0;
@@ -347,6 +339,7 @@ int		F_phaser_multi_send = 0;
 
 int     F_fps;
 int     F_ups;
+int     F_tips = 1;
 #endif /* FEATURE */
 
 int		abbr_kmesg=0;
@@ -357,7 +350,7 @@ int		dashboardStyle=0;
 
 int		plshowstatus=0;
 
-char		cloakChars[3] = "??";
+char		cloakChars[3] = "><";
 int		showInd = 0;
 int		stippleBorder = 0;
 

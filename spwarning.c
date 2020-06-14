@@ -419,7 +419,7 @@ handleSWarning(packet)
 	 (void) sprintf(buf, "%-3s->%-3s", 
 	    planets[(unsigned char) ar2].pl_name, 
 	    teamshort[planets[(unsigned char) ar2].pl_owner]);
-	 (void) sprintf(buf1, "We are being attacked by %s %c%c who is %d%% damaged.",
+	 (void) sprintf(buf1, "Bombed by %s %c%c who is %d%% damaged.",
 			players[ar1].p_name,
 			teamlet[players[ar1].p_team],
 			shipnos[ar1],

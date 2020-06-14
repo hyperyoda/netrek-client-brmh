@@ -1,0 +1,131 @@
+# Common settings are listed up here.
+
+#name:          Default character name (instead of "guest")
+#username:      Default username (instead of the system default)
+#keymap:        Custom keymap
+#ckeymap:       Custom control key map
+#macroKey:      Custom macro key
+
+# Enable logMessage and set a logfile if you want to log messages.
+#logMessage:    off
+#logFile:       /tmp/Netrek.Messages.Rec
+
+metaServer:     metaserver.netrek.org
+
+
+# The geometry in this RC file assumes 1024x768 or higher. A version assuming 1280x1024 or
+# higher is included as well. (NOTE: not included yet)
+# This entire file needs severe cleanup before a 2.6 release
+
+# Settings below are guidelines, but some (such as playerlist and IPv6 support) must be set
+# to the values given to enable code features
+
+metaDefault:			 on
+metaport: 3521
+metacachedisable:	on
+dontPing:                        off
+tryShort:                        on
+droppedPacketsFix:               on
+tryUdp:                          on
+dashboardStyle:                  3
+newdashboard:			 2
+extraAlertBorder:                on
+fillTriangle:                    on
+scrollbar:			 off
+scrollSaveLines:		 256
+scrollbarWidth:			 5
+galacticFrequent:                on
+newInfo:                         off
+newPlayerList:                   off
+phaserMsgI:                      off
+shortKillMesg:                   off
+showGalactic:                    1
+showlocal:                       1
+showLock:                        1
+#showPlanetNames:                 0
+showPlayerStatus:                on
+showShields:                     on
+showStats:                       off
+sortPlayers:                     on
+sortPlayersObs:                  on
+continueTractor:                 on
+showTractorPressor:              on
+useMsgw:                         off
+varyShields:                     on
+bigfont:                         -*-lucidatypewriter-*-*-*-*-34-*-*-*-*-*-*-*
+#boldfont:                        5x7
+#font:                            5x7
+#italicfont:                      5x7
+boldfont:                        6x10
+font:                            6x10
+italicfont:                      6x10
+mesgfont:			 6x10
+enableFastQuit:                  off
+playerlist:			 nK T Or NnlM
+
+#singleMacro:                     ^t
+keepPeace:                       on
+netStatFreq:                     10
+netstats:                        on
+newMesgFlags:                    on
+reportKills:                     on
+reportKillsInReview:		 on
+reportAllInReview:               on
+reportTeamInReview:              on
+reportIndInReview:               on
+reportPhaserInReview:            on
+warp:                            off
+updatesPerSecond:                10
+defaultShip:                     CA
+noObscureEntry:			 off
+tts:                             off
+tts_color:                       #666
+tts_font:                        -b&h-lucida-bold-r-normal-sans-17-*
+tts_len:                         40
+tts_loc:                         234
+tts_time:                        25
+fastClear:			off
+shiftedMouse:			off
+shrinkPhasers:                   on
+shrinkPhasersAmount:		 10
+phaserWindow:                    on
+puckName:			Puck
+puckHost:			Nowhere
+
+#review_all.mapped:               off
+#review_all.geometry:             80x10+504+552
+#review_all.parent:               root
+stats.mapped:			  off
+netrek.geometry:        1000x810+0+0
+netrek_icon.geometry:   +1031+0      	
+player.geometry:        82x28+-2+540
+player.mapped:          on
+player.parent:		netrek
+review_team.geometry:        82x6+500+548
+review_team.mapped:		on
+review_team.parent:		netrek
+review_your.geometry:        82x6+500+620
+review_your.mapped:		on
+review_your.parent:		netrek
+review_all.geometry:        82x6+500+690
+review_all.mapped:		on
+review_all.parent:		netrek
+review_kill.geometry:       82x4+500+760
+review_kill.mapped:             on
+review_kill.parent:             netrek
+showPhaser:   		2
+review_phaser.mapped:   off
+review_phaser.parent: netrek
+review_phaser.geometry: 81x5-5+700
+
+#review_all.mapped:		on
+#review_all.parent:		netrek
+
+#pixmapDir: /usr/local/lib/netrek/pixmaps
+#useTNGBitmaps: on
+
+mac.d.A:%       o          ___         o
+mac.d.A:%   .   |   .     /   \        |        /\      In DDuddies
+mac.d.A:%   |--===--|     \___/       / \      |  |      We Trust!
+mac.d.A:%      |.|        |   |     |/___\|   /'__'\
+mac.d.A:%      ' '        |   |        '     |_|  |_|

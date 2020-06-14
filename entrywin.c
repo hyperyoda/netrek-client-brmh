@@ -100,6 +100,7 @@ entrywindow(team, s_type)
    static int	   first = 1;
 #endif
    int		   draw_motd = 1;
+   static int      oldteam = -1;
 
    /* The following allows quick choosing of teams */
 
@@ -270,10 +271,14 @@ entrywindow(team, s_type)
 	 case 'o':
 	    *s_type = STARBASE;
 	    break;
+     case ' ': // Allow space-bar reentry
+        break;
 	 default:
 	    typeok = 0;
 	    break;
 	 }
+     if (typeok)
+         *team = oldteam;
 	 if(motdWin && event.Window == motdWin)
 	    motdWinEvent(event.key);
 	 else if (event.Window == w) {
@@ -405,6 +410,7 @@ entrywindow(team, s_type)
       *team = -1;
       return;
    }
+   oldteam = *team;
    for (i = 0; i < 4; i++)
       W_UnmapWindow(teamWin[i]);
    W_UnmapWindow(quitwin);

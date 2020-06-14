@@ -21,6 +21,7 @@
 #endif				/* hpux */
 #include <sys/file.h>
 #include "netrek.h"
+#include "version.h"
 
 #ifdef RECORD
 #include "recorder.h"
@@ -438,7 +439,7 @@ main(argc, argv)
     int             argc;
     char          **argv;
 {
-   int             team, s_type;
+   int             team = -1, s_type;
    int             usage = 0;
    int             err = 0;
    char           *name, *ptr, *cp;
@@ -584,24 +585,6 @@ main(argc, argv)
 	    argc--;
 	    argv++;
 	    break;
-#ifdef RSA
-	 case 'o':
-	    RSA_Client = -1;	/* will be reset leter, set negative here *
-				 * to flag that it should override xtrekrc */
-	    printf("Using standard binary verification\n");
-	    break;
-	 case 'V':
-	    RSA_Client = -2;	/* will be reset leter, set negative here *
-				 * to flag that it should override xtrekrc */
-	    printf("Using RSA binary verification\n");
-	    break;
-#else
-	 case 'V':
-	    printf("This client does not support RSA binary verification\n");
-	 case 'o':
-	    printf("Using standard binary verification\n");
-	    break;
-#endif
 #ifdef FOR_MORONS
 	 case 'M':
 	    if (For_Morons) {
@@ -917,18 +900,6 @@ From then on you can specify that server by doing 'netrek -h <alias>'");
       do_metaserver(metafile);
 #endif
 
-
-#ifdef RSA
-#ifdef SHOW_DEFAULTS
-      show_defaults("C-startup", "useRSA", RSA_Client?"on":"off",
-	 "Use RSA by default.");
-#endif
-   if(RSA_Client >= 0)
-      RSA_Client = booleanDefault("useRSA", RSA_Client);
-   else
-      /* RSA mode was specified in the command line args */
-      RSA_Client = (RSA_Client == -2) ? 1 : 0;
-#endif
 
 #ifdef GATEWAY
    /* pick a nice set of UDP ports */
@@ -1280,11 +1251,7 @@ printVersion(prog)
 
    char	*prog;
 {
-#ifdef RSA
-   extern char 	key_name[], client_type[], client_arch[], 
-                client_creator[], client_comments[], client_key_date[];
-#endif
-   fprintf(stderr, "BRMH version %sp%d %s %s\n", VERSION, PATCHLEVEL
+   fprintf(stderr, "BRMH version %s %s %s\n", VERSION
 #ifdef FONT_BITMAPS
    , "(external font bitmaps)"
 #else
@@ -1297,14 +1264,11 @@ printVersion(prog)
 #endif
    );
    
-#ifdef RSA
-   fprintf(stderr, "%16s:\t%s\n", "Client Key", key_name);
-   fprintf(stderr, "%16s:\t%s\n", "Client Type", client_type);
-   fprintf(stderr, "%16s:\t%s\n", "Client Arch", client_arch);
-   fprintf(stderr, "%16s:\t%s\n", "Key Creator", client_creator);
-   fprintf(stderr, "%16s:\t%s\n", "Key Date", client_key_date);
-   fprintf(stderr, "%16s:\t%s\n", "Comments", client_comments);
-#endif
+   fprintf(stderr, "%16s:\t%s\n", "Client Name", CLIENTNAME);
+   fprintf(stderr, "%16s:\t%s\n", "Client Version", VERSION);
+   fprintf(stderr, "%16s:\t%s\n", "Client OS", CLIENTOS);
+   fprintf(stderr, "%16s:\t%s\n", "Client Maintainer", MAINTENANCE);
+   fprintf(stderr, "%16s:\t%s\n", "Comments", CLIENTCOMMENTS);
 }
 
 void
@@ -1339,8 +1303,7 @@ void
 printUsage(prog)
    char           *prog;
 {
-   fprintf(stderr, "\nBRMH %sp%d usage: %s [options]\n\n", VERSION, PATCHLEVEL,
-							prog);
+   fprintf(stderr, "\nBRMH %s usage: %s [options]\n\n", VERSION, prog);
    fprintf(stderr, "Where common options include:\n");
 #ifdef META
    fprintf(stderr, "   [-m]                Check all servers (via metaserver)\n");
@@ -1360,7 +1323,7 @@ printUsage(prog)
    fprintf(stderr, "   [-A password]       Character password\n");
    fprintf(stderr, "   [-r defaultsfile]   Specify defaults file\n");
    fprintf(stderr, "   [-d display]        Specify X display\n");
-   fprintf(stderr, "   [-v]                RSA version information only.\n");
+   fprintf(stderr, "   [-v]                Version information only.\n");
    fprintf(stderr, "   [-u]                This message.\n");
    fprintf(stderr, "   [-l filename]       Record messages into 'filename'\n");
 
@@ -1372,10 +1335,6 @@ printUsage(prog)
 
    fprintf(stderr, "\nRare options:\n");
    fprintf(stderr, "   [-s socketnum]      Specify listen socket port for manual start\n");
-#ifdef RSA
-   fprintf(stderr, "   [-o]                Use old-style binary verification\n");
-   fprintf(stderr, "   [-V]                Use RSA binary verification\n");
-#endif
 #ifdef FOR_MORONS
    fprintf(stderr, "   [-M]                Toggle netrek-for-morons mode\n");
 #endif

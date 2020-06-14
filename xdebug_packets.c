@@ -695,7 +695,7 @@ ttostring(t)
       case SP_UDP_REPLY: return "UDPR";
       case SP_SEQUENCE: return "SEQ";
       case SP_SC_SEQUENCE: return "SC_SEQ";
-      case SP_RSA_KEY: return "RSA_KEY";
+      case SP_RSA_KEY: return "DEPRECATED_RSA_KEY";
       case SP_MOTD_PIC: return "MOTDP";
       case SP_S_REPLY: return "S_REPLY";
       case SP_S_MESSAGE: return "S_MSG";

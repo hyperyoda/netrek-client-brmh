@@ -6,15 +6,18 @@ BUILDING A BINARY
    binaries.
 
 INSTALLATION
- 
+   
    1. If compiling on Debian based distro you will need the following packages:
       libgmp-dev  xutils-dev libx11-dev  
    2. Edit Netrek.tmpl, checking and/or setting CC, CDEBUGFLAGS.
+      Set defined OPTIONS/FEATURES as desired to YES/NO.
    3. xmkmf; make depend ; make
+            
 
 CLIENT DETAILS
    
    * ./netrek -u for a description of command line options.
+   * ./netrek -v for version information
    * At runtime, select "show help window" for a list of commands.
    * At runtime, type ^s to display the list of features/macros/RCDs
 
