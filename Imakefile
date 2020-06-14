@@ -103,17 +103,11 @@ OBJS = colors.o data.o death.o defaults.o defwin.o detonate.o dmessage.o \
        $(SP_OBJS) $(DASHBOARD_OBJS) $(FONTBITMAP_OBJS) $(META_OBJS) \
        $(RECORD_OBJS)
 
-AllTarget(randomize)
-NormalProgramTarget(randomize,randomize.o $(RAND_OBJS),,,)
-
 AllTarget($(TARGET))
-NormalProgramTargetRandomize($(TARGET),$(OBJS),,,,./randomize)
+NormalProgramTarget($(TARGET),$(OBJS),,,)
 InstallProgram($(TARGET),$(NETREK_BIN))
 DependTarget()
 
-#ifdef SaberProgramTarget
-SaberProgramTarget($(TARGET), $(SRCS), $(OBJS),$(LDLIBS),)
-#endif
 
 /* A test of the effects of putting all code in one file */
 NormalProgramTarget(netrektest,BIG.o,,,)
@@ -134,10 +128,6 @@ World ::
 
 NormalProgramTarget(xdebug_packets,xdebug_packets.o,,XawClientLibs,-lm)
 Protos(protos.h, $(SRCS))
-#ifdef SaberProgramTarget
-SaberProgramTarget(xdebug_packets, xdebug_packets.c, xdebug_packets.o,XawClientLibs,-lm)
-#endif
-
 
 proto-%: 
 	cproto -p -m -s -f3 -D__STDC__ -D_NO_DEPEND -DCPROTO $(EXTRA_DEFINES) $(ALLINCLUDES) $* | grep static
