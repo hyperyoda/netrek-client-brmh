@@ -320,16 +320,6 @@ struct phaser {
 #endif
 };
 
-
-#ifdef RSA
-struct rsa_key {
-   unsigned char   client_type[KEY_SIZE];
-   unsigned char   architecture[KEY_SIZE];
-   unsigned char global[KEY_SIZE];
-   unsigned char   public[KEY_SIZE];
-};
-#endif
-
 /*
  * An important note concerning planets:  The game assumes that the planets
  * are in a 'known' order.  Ten planets per team, the first being the home

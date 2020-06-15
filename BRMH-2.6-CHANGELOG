@@ -1,0 +1,72 @@
+BRMH 2.6 Changelog (2.6.0-pre20090729)
+Karthik Arumugham <karthik@karthik.com>
+Jul 29, 2009
+
+Note: BRMH 2.5 was never officially released, but was released publicly in 
+beta form. This release version is being pushed to 2.6 to disambiguate it from 
+the 2.5 betas. Please see the end of the release notes for changes made 
+between the 2.4 release and the last public 2.5 betas.
+
+General changes:
+
+- Removed RSA and added extended version string support, as RSA is deprecated
+- Added support to re-enter from the MOTD after death by hitting the space bar
+  with the same ship/race as the previous ship
+- "lag (st. dev.)" in the ping stats window is now "stdev (rtt)", as "lag" is
+  a very poor and incorrect definition of round trip time variation
+- The "new" playerlist introduced in 2.5 is now default; the old behavior can
+  be restored from the options screen or in the rc file (specifically,
+  "sortPlayers" and "sortPlayersObs" now default to "on" instead of "off")
+- Added IPv6 support (note: temporarily removed from the 20090729 release)
+- Default cloaked ship characters on galactic changed to '><'
+- Sample xtrekrc with appropriate 2.6 settings included (plus a DDuddy macro!)
+
+Code changes:
+- Handle unknown feature packets more gracefully
+- Removed mp/gmp support as these are no longer needed after stripping RSA
+- Deprecated specific Ultrix build support, as it was RSA-specific
+- Removed various miscellaneous RSA-related code that is no longer needed
+
+TODO for final release of BRMH 2.6:
+- Finish IPv6 support (testing requires finishing IPv6 support in the server)
+- Fix bug where nearby ships might not show on the tactical upon entry until
+  a ship action packet is sent to the server
+- Auto-close tactical/galactic info and other dialogs after a user-specific
+  period of time, defaulting to leaving them open until closed as before
+- Fix TTS (may be pushed to a future release depending on complexity)
+- Display slot # along with ship speed with none, either, or both configurable
+- Respond to pig call
+- Clean up included xtrekrc and include 1280x1024+ version
+
+Future features:
+- Add optional background starfield support
+- Add sound support
+
+
+The following changes are as of Oct 8, 2007, taken verbatim from BRMH-2.5-CHANGELOG,
+which refers to the public beta version of BRMH 2.5 including all changes since 2.4:
+
+General changes:
+- Updated maintainer address
+- Display ship speed next to own ship on tactical instead of player number
+- New sorted player list, displays enemy team(s) first, then own team, then
+  observers (enable "sortPlayers: on" and "sortPlayersObs: on" in your rc)
+- Show 0.00 kills as blanked out in the playerlist instead of showing "0.00"
+  or "-.--"
+- Updated default metaserver to metaserver.netrek.org
+- Keyboard torpedoes now autorepeat with the minimum server torp delay
+  regardless of keyrepeat delay
+- Clock can be reset to zero (default 'K')
+- Support metaserver strings for INL, Sturgeon, and Other
+- Cloaking graphics last correct duration (was broken since change from 5ups
+  to 10ups)
+- Support for "username:" line in rc file to set username
+
+Code changes:
+- Compiles on MacOS X
+- Removed dependency on user-installed libgmp on MacOS X
+- Made PI longer for no specific reason
+- Fixed multiply-defined and used qwin variable that caused crashes (one qwin
+  is now quitwin)
+- Removed strdup() code
+- Support FPS and UPS feature packets

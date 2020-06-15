@@ -50,12 +50,12 @@ typedef struct precord {
 static PSLIDER   psliders[] =
 {
    {"round trip time", 0, 500, 100, 200},
-   {"average r.t. time", 0, 500, 100, 200},
-   {"lag (st. dev.)", 0, 100, 20, 50},
-   {"inc. pack loss in", 0, 50, 10, 20},
-   {"inc. pack loss out", 0, 50, 10, 20},
-   {"tot. pack loss in", 0, 50, 5, 10},
-   {"tot. pack loss out", 0, 50, 5, 10},
+   {"average rtt", 0, 500, 100, 200},
+   {"stdev (rtt)", 0, 100, 20, 50},
+   {"cur pack loss in", 0, 50, 10, 20},
+   {"cur pack loss out", 0, 50, 10, 20},
+   {"avg pack loss in", 0, 50, 5, 10},
+   {"avg pack loss out", 0, 50, 5, 10},
 };
 
 #if __STDC__ || defined(__cplusplus)

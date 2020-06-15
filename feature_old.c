@@ -54,10 +54,10 @@ CheckFeatures(m)
 void
 sendVersion()
 {
-   char                            client_ver[15];
+   char                            client_ver[80];
    if (!version_sent) {
       version_sent = 1;
-      sprintf(client_ver, "@%s.%d", VERSION, PATCHLEVEL);
+      sprintf(client_ver, "@%s %s (%s)", CLIENTNAME, VERSION, CLIENTOS);
 
       sendMessage(client_ver, MINDIV|MCONFIG, me->p_no);
    }

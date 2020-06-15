@@ -345,9 +345,6 @@ extern int lMeterWidth P_((void));
 extern void redrawLMeter P_((void));
 extern void updateLMeter P_((void));
 extern void lMeterBox P_((int filled, int x, int y, int w, int h, W_Color color));
-/* rsa_box.c */
-extern void rsa_black_box P_((unsigned char *out, unsigned char *in, unsigned char *public, unsigned char *global));
-/* rsa_box_0.c */
 /* feature.c */
 extern int feature_lines P_((void));
 extern void checkFeature P_((struct feature_spacket *packet));

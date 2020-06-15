@@ -10,21 +10,6 @@
            CDEBUGFLAGS = -O -g
 
 
-#define RSA_            NO             /* RSA */
-
-#if RSA_
-/* RSA paths */
-            MP_LIB = -lgmp -lmp
-            MP_INCLUDE = -Igmp
-
-/* RSA boxes -- put here because the default # of boxes might change */
-
-        RSA_BOX_SRCS =  rsa_box_0.c rsa_box_1.c rsa_box_2.c \
-			rsa_box_3.c rsa_box_4.c
-        RSA_BOX_OBJS =  rsa_box_0.o rsa_box_1.o rsa_box_2.o \
-			rsa_box_3.o rsa_box_4.o
-#endif /* _RSA_ */
-	   
 /* BIN for binary installation if desired */
 NETREK_BIN =
 
@@ -145,9 +130,6 @@ NEEDRANDOM=-DNEED_RANDOM
 #endif
 #if ShowDefaults
 SHOWDEFAULTS=-DSHOW_DEFAULTS
-#endif
-#if RSA_
-RSA=-DRSA
 #endif
 #if NetStat
 NETSTAT=-DNETSTAT
@@ -283,7 +265,7 @@ BD=-DBD
 SPTEST=-DSPTEST
 #endif
 
-EXTRA_DEFINES = $(RSA) $(NETSTAT) $(ROTATERACE) $(DEBUG) $(FOR_MORONS) \
+EXTRA_DEFINES = $(NETSTAT) $(ROTATERACE) $(DEBUG) $(FOR_MORONS) \
  $(MOOBITMAPS) $(MOOTCURSORS) $(AUTOLOGIN) $(DYNAMIC_BITMAPS) \
  $(TTS) $(GATEWAY) $(TREKHOPD) $(FEATURE) $(CONTROL_KEY) \
  $(MULTILINE_MACROS) $(NEEDRANDOM) $(HOCKEY) $(PHASER_SHRINK) $(META)\
